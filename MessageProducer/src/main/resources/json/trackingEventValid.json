@@ -1,0 +1,49 @@
+{
+    "MessageHeader": {
+        "MsgUUID": "23434523452345ade234523452345234",
+        "MsgSender": "MessageProducer",
+        "MsgRecipient": "TrackingSystem",
+        "MsgCreationTimestamp": "2020-04-23T13:36:00.000000000+00:00"
+    },
+    "Event": {
+        "EventUUID": "23434523452345ade234523452345234",
+        "EventCreationTimestamp": "2020-04-23T13:36:00.000000000+00:00",
+        "EventType": "Vorankündigung",
+        "ScanFacility": "Berlin Zentral",
+        "Sender": {
+            "Name": "Max Mustermann",
+            "Street": "Musterstraße",
+            "HouseNumber": "1",
+            "City": "Musterburg",
+            "PostCode": "1234596897",
+            "CityDistrict": "Musterberg",
+            "PostBox": "3421232349",
+            "Country": "Deutschland",
+            "Email": "muster@mustermail.de",
+            "Phone": "0123 4567890",
+            "Fax": "0123 4567891"
+        },
+        "Receiver": {
+            "Name": "Max Mustermann",
+            "Street": "Musterstraße",
+            "HouseNumber": "1",
+            "City": "Musterburg",
+            "PostCode": "1234596897",
+            "CityDistrict": "Musterberg",
+            "PostBox": "3421232349",
+            "Country": "Deutschland",
+            "Email": "muster@mustermail.de",
+            "Phone": "0123 4567890",
+            "Fax": "0123 4567891"
+        },
+        "Identifiers": [
+            {
+                "Type": "Versandmarke",
+                "Value": "081512343DE",
+                "Amount": 0.80,
+                "Currency": "EUR"
+            }
+        ],
+        "Message": "Die Sendung wird für den Versand vorbereitet."
+    }
+}
