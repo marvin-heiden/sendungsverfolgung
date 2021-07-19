@@ -1,0 +1,272 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "JSON Schema for Tracking Events",
+    "type": "object",
+    "properties": {
+        "MessageHeader": {
+            "description": "Nachrichtenkopf mit grundlegenden Informationen zur Nachricht",
+            "type": "object",
+            "properties": {
+                "MsgUUID": {
+                    "description": "Eindeutige Nachrichten ID vergeben durch den Absender der Nachricht.",
+                    "type": "string",
+                    "pattern": "^[0-9a-fA-F]{32}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                },
+                "MsgSender": {
+                    "description": "Der Absender dieser Nachricht.",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20
+                },
+                "MsgReceiver": {
+                    "description": "Der Empfänger dieser Nachricht. ",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20
+                },
+                "MsgTimestamp": {
+                    "description": "Der Zeitpunkt, an dem diese Nachricht erzeugt wurde. ",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "isTest": {
+                    "description": "Gibt an, ob es sich um eine Testnachricht handelt (true) oder nicht (false).",
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "MsgUUID",
+                "MsgSender",
+                "MsgReceiver",
+                "MsgTimestamp"
+            ],
+            "additionalProperties": false
+        },
+        "Event": {
+            "description": "Beinhaltet alle grundlegenden Angaben zum Event.",
+            "type": "object",
+            "properties": {
+                "EventUUID": {
+                    "description": "Eindeutige Event-ID, vergeben durch den Erzeuger oder den Absender des Events.",
+                    "type": "string",
+                    "pattern": "^[0-9a-fA-F]{32}$|^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                },
+                "EventTimestamp": {
+                    "description": "Der Zeitpunkt, an dem das Event auf dem Device erzeugt wurde.",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "EventType": {
+                    "description": "Name dew Ereignistyps",
+                    "type": "string",
+                    "enum": ["Vorankündigung", "Abgangszentrum", "Eingangszentrum", "Zugestellt", "Weiterleitung", "Zustellhindernis"]
+                },
+                "ScanFacility": {
+                    "description": "Name des Entstehungsorts des Events",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 50
+                },
+                "Message": {
+                    "description": "Beschreibung des Ereignistyps in Langform",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 64
+                },
+                "Sender": {
+                    "description": "Informationen über den Versender der Sendung",
+                    "type": "object",
+                    "properties": {
+                        "PostCode": {
+                            "description": "Postleitzahl der Sendung",
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 10
+                        },
+                        "Country": {
+                            "description": "Country der Sendung zweistellig",
+                            "type": "string",
+                            "pattern": "^[A-Z]{2}"
+                        },
+                        "Name": {
+                            "description": "Anrede, Vor und Nachname des Sendungsempfängers",
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                        },
+                        "Street": {
+                            "description": "Straßenbezeichnung. Straße/Hausnr. Und Postfach schließen sich gegenseitig aus, können aber auch beide fehlen (z.B. Großkunden-PLZ)",
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                        },
+                        "HouseNumber": {
+                            "description": "Hausnummer auf Straße und ggf. weitere Kennzeichen (a, b,…). Straße/Hausnr. Und Postfach schließen sich gegenseitig aus, können aber auch beide fehlen (z.B. Großkunden-PLZ)",
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64
+                        },
+                        "PostBox": {
+                            "description": "Postfach-Angabe falls vorhanden. Straße/Hausnr. Und Postfach schließen sich gegenseitig aus, können aber auch beide fehlen (z.B. Großkunden-PLZ)",
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 10
+                        },
+                        "City": {
+                            "description": "Ort des Sendungsempfängers",
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64
+                        },
+                        "CityDistrict": {
+                            "description": "Ortsteil des Sendungsempfängers",
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64
+                        },
+                        "Email": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                        },
+                        "Phone": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64
+                        },
+                        "Fax": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64
+                        }
+                    },
+                    "required": [],
+                    "additionalProperties": false
+                },
+                "Receiver": {
+                    "description": "Informationen über den Empfänger der Sendung",
+                    "type": "object",
+                    "properties": {
+                        "PostCode": {
+                            "description": "Postleitzahl der Sendung",
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 10
+                        },
+                        "Country": {
+                            "description": "Country der Sendung zweistellig",
+                            "type": "string",
+                            "pattern": "^[A-Z]{2}"
+                        },
+                        "Name": {
+                            "description": "Anrede, Vor und Nachname des Sendungsempfängers",
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                        },
+                        "Street": {
+                            "description": "Straßenbezeichnung. Straße/Hausnr. Und Postfach schließen sich gegenseitig aus, können aber auch beide fehlen (z.B. Großkunden-PLZ)",
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                        },
+                        "HouseNumber": {
+                            "description": "Hausnummer auf Straße und ggf. weitere Kennzeichen (a, b,…). Straße/Hausnr. Und Postfach schließen sich gegenseitig aus, können aber auch beide fehlen (z.B. Großkunden-PLZ)",
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64
+                        },
+                        "PostBox": {
+                            "description": "Postfach-Angabe falls vorhanden. Straße/Hausnr. Und Postfach schließen sich gegenseitig aus, können aber auch beide fehlen (z.B. Großkunden-PLZ)",
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 10
+                        },
+                        "City": {
+                            "description": "Ort des Sendungsempfängers",
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64
+                        },
+                        "CityDistrict": {
+                            "description": "Ortsteil des Sendungsempfängers",
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64
+                        },
+                        "Email": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                        },
+                        "Phone": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64
+                        },
+                        "Fax": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 64
+                        }
+                    },
+                    "required": [],
+                    "additionalProperties": false
+                },
+                "Identifiers": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/Identifier"
+                    }
+                },
+                "required": [
+                    "EventUUID",
+                    "EventTimestamp",
+                    "EventType",
+                    "Message",
+                    "Identifiers"
+                ],
+                "additionalProperties": false
+            }
+        }
+    },
+    "definitions": {
+        "Identifier": {
+            "description": "Identifizierung der Briefsendung durch Frankierung",
+            "type": "object",
+            "properties": {
+                "Type": {
+                    "description": "Typ des Identifizierers",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20
+                },
+                "Value": {
+                    "description": "Wert des Identifizierers",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 64
+                },
+                "Amount": {
+                    "description": "Wert der Frankierung in Währungseinheit",
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 999999999,
+                    "multipleOf": 0.01
+                },
+                "Currency": {
+                    "description": "Dreistelliger alphabetischer ISOCode der Währung der Frankierung",
+                    "type": "string",
+                    "pattern": "^[A-Z]{3,3}$"
+                }
+            },
+            "required": [
+                "Type",
+                "Value"
+            ],
+            "additionalProperties": false
+        }
+    },
+    "additionalProperties": false
+}
