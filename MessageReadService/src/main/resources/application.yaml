@@ -1,0 +1,32 @@
+spring:
+  kafka:
+    bootstrap-servers: "localhost:29092"
+    consumer:
+      group-id: "groupId"
+      auto-offset-reset: "earliest"
+      enable-auto-commit: false
+
+server:
+  servlet:
+    context-path: /bringdeinding
+  port: 8081
+
+logging:
+  file:
+    path: log
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, health, env, logfile, swagger-ui
+
+info:
+  app:
+    name: @project.name@
+    description: @project.description@
+    version: @project.version@
+
+springfox:
+  documentation:
+    enabled: true

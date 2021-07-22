@@ -13,7 +13,7 @@ public class Identifier {
     public Identifier(){
         Generex generator = new Generex("\\b([0-9]{12}|100\\d{31}|\\d{15}|\\d{18}|96\\d{20}|96\\d{32})\\b");
         this.value = generator.random();
-        this.amount = Float.parseFloat(String.format(Locale.ROOT,"%.2f",100*Math.random()));
+        this.amount = Float.parseFloat(String.format(Locale.ROOT,"%.2f",10*Math.random()));
         this.type = "Versandmarke";
         this.currency = "EUR";
     }
@@ -28,5 +28,9 @@ public class Identifier {
         identifierNode.put("Currency", currency);
 
         return identifierNode;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

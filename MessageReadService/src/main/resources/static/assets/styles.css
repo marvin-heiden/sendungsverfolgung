@@ -1,0 +1,99 @@
+/*
+ * Copyright © 2020 - 2099 Senacor Technologies AG. All rights reserved.
+ */
+@font-face{font-family:frutiger45_light;src:url('fonts/frutiger45_light.b5a50e926d13702a509d.woff2') format("woff2"),url('fonts/frutiger45_light.0e6a24e6714d88549f27.woff') format("woff"),url('fonts/frutiger45_light.37b9389eda20d67fcf05.ttf') format("truetype");font-weight:200;font-style:normal}
+body {
+    font-family: frutiger55_roman, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.28571429;
+    font-size: .875rem;
+    color: #3e3e3e;
+    background-color: #fff;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,h2,h3 {
+    font-family: frutiger45_light,"Helvetica Neue",Arial,sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    color: #706964;
+    font-weight: 200;
+}
+
+img {
+    position: absolute;
+    margin-top: 35px;
+    padding: 22px;
+}
+
+div {
+    display: block;
+}
+
+a {
+    color: #333333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.container-inlay {
+    position: relative;
+    height: 120px;
+}
+@media (min-width: 768px) {
+    .container {
+        width: 750px;
+    }
+    .container-inlay:before {
+        content: "";
+        position: absolute;
+        width: auto;
+        height: 85px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: linear-gradient(to bottom,#878787 0,#000000 100%);
+        border-bottom: 1px solid #e5cb60;
+    }
+
+    .mod-navigation .container-inlay:before {
+        z-index: -1;
+    }
+}
+
+@media (min-width: 992px) {
+    h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+    }
+    h2 {
+        font-size: 1.75rem;
+        line-height: 2.0rem;
+    }
+    h3 {
+        font-size: 1.25rem;
+        line-height: 1.5rem;
+    }
+    .container {
+        padding-left: 56px;
+        padding-right: 56px;
+        max-width: 1362px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1170px;
+    }
+}

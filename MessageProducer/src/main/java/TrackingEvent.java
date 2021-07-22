@@ -2,9 +2,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.UUID;
 
 public class TrackingEvent {
+
     private String uuid;
     private String creationTimestamp;
     public enum EventType {Vorankündigung, Abgangszentrum, Eingangszentrum, Zugestellt, Weiterleitung, Zustellhindernis};
@@ -15,9 +20,9 @@ public class TrackingEvent {
     private Person receiver;
     private ArrayList<Identifier> identifiers;
 
-    public TrackingEvent(String uuid, String creationTimestamp, EventType type, String facility, String message, Person sender, Person receiver) {
-        this.uuid = uuid;
-        this.creationTimestamp = creationTimestamp;
+    public TrackingEvent(EventType type, String facility, String message, Person sender, Person receiver) {
+        this.uuid = UUID.randomUUID().toString();
+        this.creationTimestamp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date());
         this.type = type;
         this.facility = facility;
         this.message = message;
@@ -27,7 +32,7 @@ public class TrackingEvent {
 
         //Add additional identifiers in 1% of all cases
         int identifierCount = 1;
-        if (Math.random() > 0.99){
+        if (Math.random() > 0.20){
             identifierCount += ((int) Math.random() * 10 + 1);
         }
         for (int i = 0; i<identifierCount; i++) this.identifiers.add(new Identifier());
@@ -38,7 +43,7 @@ public class TrackingEvent {
         ObjectNode eventNode = mapper.createObjectNode();
 
         eventNode.put("EventUUID", uuid);
-        eventNode.put("EventCreationTimestamp",creationTimestamp);
+        eventNode.put("EventTimestamp",creationTimestamp);
         eventNode.put("EventType", type.toString());
         eventNode.put("ScanFacility", facility);
         eventNode.put("Message", message);
@@ -84,4 +89,13 @@ public class TrackingEvent {
     public ArrayList<Identifier> getIdentifiers() {
         return identifiers;
     }
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public void setIdentifiers(ArrayList<Identifier> identifiers) {
+        this.identifiers = identifiers;
+    }
+
+
 }

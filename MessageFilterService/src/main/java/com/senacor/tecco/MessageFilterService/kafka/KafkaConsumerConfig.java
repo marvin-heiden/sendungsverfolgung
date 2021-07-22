@@ -21,7 +21,7 @@ public class KafkaConsumerConfig {
         Map<String, Object> config = new HashMap<>();
         config.put(
                 ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                "localhost:9092");
+                "localhost:29092");
         config.put(
                 ConsumerConfig.GROUP_ID_CONFIG,
                 "groupId");

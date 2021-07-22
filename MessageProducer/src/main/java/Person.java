@@ -33,17 +33,17 @@ public class Person {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode personNode = mapper.createObjectNode();
 
-        personNode.put("Name", name);
-        personNode.put("Street", street);
-        personNode.put("HouseNumber", houseNumber);
-        personNode.put("City", city);
-        personNode.put("PostCode", postCode);
-        personNode.put("CityDistrict", cityDistrict);
-        personNode.put("PostBox", postBox);
-        personNode.put("Country", country);
-        personNode.put("Email", email);
-        personNode.put("Phone", phone);
-        personNode.put("Fax", fax);
+        if (!name.isEmpty()) personNode.put("Name", name);
+        if (!street.isEmpty()) personNode.put("Street", street);
+        if (!houseNumber.isEmpty()) personNode.put("HouseNumber", houseNumber);
+        if (!city.isEmpty()) personNode.put("City", city);
+        if (!postCode.isEmpty()) personNode.put("PostCode", postCode);
+        if (!cityDistrict.isEmpty()) personNode.put("CityDistrict", cityDistrict);
+        if (!postBox.isEmpty()) personNode.put("PostBox", postBox);
+        if (!country.isEmpty()) personNode.put("Country", country);
+        if (!email.isEmpty()) personNode.put("Email", email);
+        if (!phone.isEmpty()) personNode.put("Phone", phone);
+        if (!fax.isEmpty()) personNode.put("Fax", fax);
 
         return personNode;
     }

@@ -1,15 +1,24 @@
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Runner {
     public static void main(String[] args) {
-        MessageProducer messageProducer = new MessageProducer("input", "localhost", "9092");
+        MessageProducer messageProducer = new MessageProducer("input", "localhost", "29092");
 
-        Person test = new Person("Max", "Musterstr.", "2", "Musterburg", "", "4567892", "","Germany", "", "","");
-        TrackingEvent event = new TrackingEvent("d4g5f6sdfg4fd6", new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()), TrackingEvent.EventType.Vorankündigung,"Berlin Zentral", "Die Sendung wurde angekündigt.", test,test);
+        Person test = new Person("Max", "Musterstr.", "2", "Musterburg", "", "4567892", "","DE", "", "","");
+        TrackingEvent eventValid = new TrackingEvent(TrackingEvent.EventType.Vorankündigung,"Berlin Zentral", "Die Sendung wurde angekündigt.", test,test);
 
-        messageProducer.sendMessage("1",event.toJson());
+        Identifier id = new Identifier();
+        id.setValue("b083185032517b");
+        ArrayList<Identifier> ids = new ArrayList<>();
+        ids.add(id);
+
+        eventValid.setIdentifiers(ids);
+
+        //TrackingEvent eventInvalid = new TrackingEvent(TrackingEvent.EventType.Vorankündigung,"Berlin Zentral", "Die Sendung wurde angekündigt.", test,test);
+        //eventInvalid.setUuid("Banane");
+
+        messageProducer.sendMessage("1",eventValid.toJson());
+        //messageProducer.sendMessage("2", eventInvalid.toJson());
         messageProducer.closeProducer();
     }
 }

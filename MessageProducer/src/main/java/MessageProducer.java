@@ -1,6 +1,7 @@
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
+import java.util.UUID;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,7 +27,7 @@ public class MessageProducer {
         ObjectMapper mapper = new ObjectMapper();
 
         ObjectNode messageHeader = mapper.createObjectNode();
-        messageHeader.put("MsgUUID", "123456789");
+        messageHeader.put("MsgUUID", UUID.randomUUID().toString());
         messageHeader.put("MsgSender", "MessageProducer");
         messageHeader.put("MsgReceiver", "TrackingSystem");
         messageHeader.put("MsgTimestamp", new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()));
@@ -40,6 +41,7 @@ public class MessageProducer {
 
             ProducerRecord producerRecord = new ProducerRecord(topic, key, jsonString); // Partition Key can also be declared! -> Modulo Operator
             kafkaProducer.send(producerRecord);
+            System.out.println("Message delivered.");
         }
         catch (JsonProcessingException e) {
             e.printStackTrace();
