@@ -1,5 +1,6 @@
 package com.senacor.tecco.MessageReadService.controllers;
 
+import com.senacor.tecco.MessageReadService.models.Message;
 import com.senacor.tecco.MessageReadService.services.TrackingService;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.ApiOperation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,8 +29,8 @@ public class TrackingHistoryController {
             @ApiResponse(code = 403, message = "Not enough rights to access this resource"),
             @ApiResponse(code = 404, message = "Resource not found")
     })
-    List<String> getTrackingHistory(@RequestParam(value = "trackingNumber") String trackingNumber){
+    List<Message> getTrackingHistory(@RequestParam(value = "trackingNumber") String trackingNumber){
         // Query Storage Topic for trackingNumber
-        return trackingService.getTrackingHistory(trackingNumber);
+        return trackingService.getAllAssociatedMessages(trackingNumber);
     }
 }
