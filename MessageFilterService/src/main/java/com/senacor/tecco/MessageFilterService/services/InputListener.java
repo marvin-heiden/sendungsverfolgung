@@ -1,4 +1,4 @@
-package com.senacor.tecco.MessageFilterService.kafka;
+package com.senacor.tecco.MessageFilterService.services;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,8 +8,6 @@ import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.SpecVersion;
 import com.networknt.schema.ValidationMessage;
-import com.senacor.tecco.MessageFilterService.models.Person;
-import org.apache.kafka.clients.producer.internals.Sender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -31,10 +29,11 @@ public class InputListener {
     @Autowired
     public InputListener() {
         JsonSchemaFactory factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
+
         try {
             jsonSchemaTrackingEvent = factory.getSchema(new URI("classpath:TrackingEventSchema.json"));
         } catch (URISyntaxException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 

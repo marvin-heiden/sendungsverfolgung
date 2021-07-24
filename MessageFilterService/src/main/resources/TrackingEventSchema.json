@@ -71,7 +71,7 @@
                     "description": "Beschreibung des Ereignistyps in Langform",
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 64
+                    "maxLength": 128
                 },
                 "Sender": {
                     "description": "Informationen über den Versender der Sendung",

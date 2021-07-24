@@ -1,5 +1,6 @@
-package com.senacor.tecco.MessageFilterService.kafka;
+package com.senacor.tecco.MessageProducer.config;
 
+import com.senacor.tecco.MessageProducer.models.Message;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +19,7 @@ import java.util.Map;
 public class KafkaProducerConfig {
 
     @Bean
-    public ProducerFactory<String, String> producerFactory() {
+    public ProducerFactory<String, Message> producerFactory() {
         Map<String, Object> config = new HashMap<>();
         config.put(
                 ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
@@ -28,13 +29,13 @@ public class KafkaProducerConfig {
                 StringSerializer.class);
         config.put(
                 ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
-                StringSerializer.class);
+                JsonSerializer.class);
 
         return new DefaultKafkaProducerFactory<>(config);
     }
 
     @Bean
-    public KafkaTemplate<String, String> kafkaTemplate(){
+    public KafkaTemplate<String, Message> kafkaTemplate(){
         return new KafkaTemplate<>(producerFactory());
     }
 }

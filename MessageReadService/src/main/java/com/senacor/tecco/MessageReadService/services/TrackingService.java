@@ -3,9 +3,7 @@ package com.senacor.tecco.MessageReadService.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.senacor.tecco.MessageReadService.config.KafkaConsumerConfig;
-import com.senacor.tecco.MessageReadService.models.Identifier;
-import com.senacor.tecco.MessageReadService.models.Message;
-import com.senacor.tecco.MessageReadService.models.TrackingHistory;
+import com.senacor.tecco.MessageReadService.models.*;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -20,12 +18,29 @@ import java.util.stream.Collectors;
 public class TrackingService {
 
 
-    public void createOrderedTrackingHistory(List<Message> messages, TreeSet<String> identifiers){
-        TrackingHistory trackingHistory = new TrackingHistory();
-        //trackingHistory.setSender();
+    public TrackingHistory createTrackingHistory(List<Message> messages, TreeSet<String> identifiers) {
+        ArrayList<Step> history = new ArrayList<>();
+        for (Message message : messages) {
+            history.add(new Step(
+                    message.getEvent().getCreationTimestamp(),
+                    message.getEvent().getMessage(),
+                    message.getEvent().getType()
+            ));
+        }
+
+        Event lastMessageEvent = messages.get(messages.size()-1).getEvent();
+
+        TrackingHistory trackingHistory = new TrackingHistory(
+                lastMessageEvent.getReceiver(),
+                lastMessageEvent.getSender(),
+                history,
+                identifiers
+        );
+
+        return trackingHistory;
     }
 
-    public List<Message> getAllAssociatedMessages(String trackingNumber) {
+    public TrackingHistory getAllAssociatedMessages(String trackingNumber) {
         // Get initial messages by tracking number
         ArrayList<Message> messages = getMessagesByTrackingNumber(trackingNumber);
 
@@ -48,15 +63,17 @@ public class TrackingService {
             }
         }
 
-        new ArrayList<>(foundNumbers);
-
-        // Remove duplicates & return
-        return messages.stream().distinct().collect(Collectors.toList());
+        return createTrackingHistory(
+                messages.stream()
+                .distinct()
+                .sorted(Comparator.comparing(o -> o.getEvent().getCreationTimestamp()))
+                .collect(Collectors.toList()),
+                foundNumbers);
     }
 
     public ArrayList<Message> getMessagesByTrackingNumber(String trackingNumber) {
         // Create Container for return values
-        ArrayList<Message> events = new ArrayList<>();
+        ArrayList<Message> messages = new ArrayList<>();
 
         // Create consumer
         Properties consumerProps = KafkaConsumerConfig.getConsumerProps();
@@ -68,6 +85,7 @@ public class TrackingService {
         LinkedList<TopicPartition> partitions = new LinkedList<>();
         partitions.add(partition);
         consumer.assign(partitions);
+        System.out.println("Assigned to partition "+partitionNumber);
 
         // Retrieve all current messages on partition
         long maxOffset = consumer.endOffsets(partitions).get(partition) - 1;
@@ -75,14 +93,16 @@ public class TrackingService {
         ConsumerRecords<String, String> records;
         ObjectMapper mapper = new ObjectMapper();
 
-        outerloop:
+        outerLoop:
         while (currentOffset < maxOffset) {
             records = consumer.poll(Duration.ofMillis(1000));
             for (ConsumerRecord<String, String> record : records) {
                 if (record.key().equals(trackingNumber)) {
                     try {
-                        events.add(mapper.readValue(record.value(), Message.class));
-                        if (record.value().contains("Zugestellt")) break outerloop;
+                        messages.add(mapper.readValue(record.value(), Message.class));
+                        System.out.println(record.value());
+                        // Stop searching if final message was already processed
+                        if (record.value().contains("Zugestellt")) break outerLoop;
                     } catch (JsonProcessingException e) {
                         e.printStackTrace();
                     }
@@ -91,11 +111,9 @@ public class TrackingService {
             }
         }
 
-        //events.forEach(System.out::println);
-
         // consumer.seekToBeginning()
         consumer.close();
 
-        return events;
+        return messages;
     }
 }

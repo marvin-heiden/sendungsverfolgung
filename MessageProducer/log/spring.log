@@ -1,0 +1,310 @@
+2021-07-25 00:41:15.231  INFO 40124 --- [main] c.s.t.M.MessageProducerApplication       : Starting MessageProducerApplication using Java 11.0.11 on M121710A.fritz.box with PID 40124 (/Users/mheiden/Projects/sendungsverfolgung/MessageProducer/target/classes started by mheiden in /Users/mheiden/Projects/sendungsverfolgung/MessageProducer)
+2021-07-25 00:41:15.251  INFO 40124 --- [main] c.s.t.M.MessageProducerApplication       : No active profile set, falling back to default profiles: default
+2021-07-25 00:41:17.347  INFO 40124 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-07-25 00:41:17.358  INFO 40124 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-07-25 00:41:17.359  INFO 40124 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2021-07-25 00:41:17.491  INFO 40124 --- [main] o.a.c.c.C.[.[.[/bringdeinding]           : Initializing Spring embedded WebApplicationContext
+2021-07-25 00:41:17.491  INFO 40124 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2145 ms
+2021-07-25 00:41:17.788  WARN 40124 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'producerController' defined in file [/Users/mheiden/Projects/sendungsverfolgung/MessageProducer/target/classes/com/senacor/tecco/MessageProducer/controllers/ProducerController.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'producerService': Unsatisfied dependency expressed through field 'kafkaTemplate'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.kafka.core.KafkaTemplate<java.lang.String, com.senacor.tecco.MessageProducer.models.Message>' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2021-07-25 00:41:17.792  INFO 40124 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2021-07-25 00:41:17.810  INFO 40124 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-07-25 00:41:17.831 ERROR 40124 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field kafkaTemplate in com.senacor.tecco.MessageProducer.services.ProducerService required a bean of type 'org.springframework.kafka.core.KafkaTemplate' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'org.springframework.kafka.core.KafkaTemplate' in your configuration.
+
+2021-07-25 00:42:30.955  INFO 40216 --- [main] c.s.t.M.MessageProducerApplication       : Starting MessageProducerApplication using Java 11.0.11 on M121710A.fritz.box with PID 40216 (/Users/mheiden/Projects/sendungsverfolgung/MessageProducer/target/classes started by mheiden in /Users/mheiden/Projects/sendungsverfolgung/MessageProducer)
+2021-07-25 00:42:30.958  INFO 40216 --- [main] c.s.t.M.MessageProducerApplication       : No active profile set, falling back to default profiles: default
+2021-07-25 00:42:32.924  INFO 40216 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-07-25 00:42:32.938  INFO 40216 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-07-25 00:42:32.938  INFO 40216 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2021-07-25 00:42:33.054  INFO 40216 --- [main] o.a.c.c.C.[.[.[/bringdeinding]           : Initializing Spring embedded WebApplicationContext
+2021-07-25 00:42:33.054  INFO 40216 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2027 ms
+2021-07-25 00:42:33.592  INFO 40216 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoint(s) beneath base path '/actuator'
+2021-07-25 00:42:33.909  INFO 40216 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path '/bringdeinding'
+2021-07-25 00:42:34.011  INFO 40216 --- [main] c.s.t.M.MessageProducerApplication       : Started MessageProducerApplication in 4.014 seconds (JVM running for 4.845)
+2021-07-25 00:42:52.861  INFO 40216 --- [http-nio-8081-exec-2] o.a.c.c.C.[.[.[/bringdeinding]           : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-07-25 00:42:52.862  INFO 40216 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-07-25 00:42:52.867  INFO 40216 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2021-07-25 00:43:32.726  INFO 40216 --- [http-nio-8081-exec-2] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values: 
+	acks = 1
+	batch.size = 16384
+	bootstrap.servers = [localhost:29092]
+	buffer.memory = 33554432
+	client.dns.lookup = use_all_dns_ips
+	client.id = producer-1
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = false
+	interceptor.classes = []
+	internal.auto.downgrade.txn.commit = true
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metadata.max.idle.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 60000
+	transactional.id = null
+	value.serializer = class org.springframework.kafka.support.serializer.JsonSerializer
+
+2021-07-25 00:43:32.822  WARN 40216 --- [http-nio-8081-exec-2] o.a.k.clients.producer.ProducerConfig    : The configuration 'internal.auto.downgrade.txn.commit' was supplied but isn't a known config.
+2021-07-25 00:43:32.827  INFO 40216 --- [http-nio-8081-exec-2] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 2.8.0
+2021-07-25 00:43:32.828  INFO 40216 --- [http-nio-8081-exec-2] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: ebb1d6e21cc92130
+2021-07-25 00:43:32.828  INFO 40216 --- [http-nio-8081-exec-2] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1627166612825
+2021-07-25 00:43:33.355  INFO 40216 --- [kafka-producer-network-thread | producer-1] org.apache.kafka.clients.Metadata        : [Producer clientId=producer-1] Cluster ID: 55BHEX_8R3Sb3ZVwi10irg
+2021-07-25 00:47:10.146  INFO 40216 --- [SpringApplicationShutdownHook] o.a.k.clients.producer.KafkaProducer     : [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 30000 ms.
+2021-07-25 00:47:10.161  INFO 40216 --- [SpringApplicationShutdownHook] org.apache.kafka.common.metrics.Metrics  : Metrics scheduler closed
+2021-07-25 00:47:10.162  INFO 40216 --- [SpringApplicationShutdownHook] org.apache.kafka.common.metrics.Metrics  : Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2021-07-25 00:47:10.163  INFO 40216 --- [SpringApplicationShutdownHook] org.apache.kafka.common.metrics.Metrics  : Metrics reporters closed
+2021-07-25 00:47:10.164  INFO 40216 --- [SpringApplicationShutdownHook] o.a.kafka.common.utils.AppInfoParser     : App info kafka.producer for producer-1 unregistered
+2021-07-25 00:47:32.146  INFO 40620 --- [main] c.s.t.M.MessageProducerApplication       : Starting MessageProducerApplication using Java 11.0.11 on M121710A.fritz.box with PID 40620 (/Users/mheiden/Projects/sendungsverfolgung/MessageProducer/target/classes started by mheiden in /Users/mheiden/Projects/sendungsverfolgung/MessageProducer)
+2021-07-25 00:47:32.151  INFO 40620 --- [main] c.s.t.M.MessageProducerApplication       : No active profile set, falling back to default profiles: default
+2021-07-25 00:47:34.009  INFO 40620 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-07-25 00:47:34.021  INFO 40620 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-07-25 00:47:34.021  INFO 40620 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2021-07-25 00:47:34.146  INFO 40620 --- [main] o.a.c.c.C.[.[.[/bringdeinding]           : Initializing Spring embedded WebApplicationContext
+2021-07-25 00:47:34.146  INFO 40620 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1906 ms
+2021-07-25 00:47:34.707  INFO 40620 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoint(s) beneath base path '/actuator'
+2021-07-25 00:47:34.868  INFO 40620 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2021-07-25 00:47:35.022  INFO 40620 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path '/bringdeinding'
+2021-07-25 00:47:35.128  INFO 40620 --- [main] c.s.t.M.MessageProducerApplication       : Started MessageProducerApplication in 4.133 seconds (JVM running for 4.981)
+2021-07-25 00:47:44.759  INFO 40620 --- [http-nio-8081-exec-1] o.a.c.c.C.[.[.[/bringdeinding]           : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-07-25 00:47:44.760  INFO 40620 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-07-25 00:47:44.764  INFO 40620 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2021-07-25 00:47:45.194  INFO 40620 --- [http-nio-8081-exec-1] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values: 
+	acks = 1
+	batch.size = 16384
+	bootstrap.servers = [localhost:29092]
+	buffer.memory = 33554432
+	client.dns.lookup = use_all_dns_ips
+	client.id = producer-1
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = false
+	interceptor.classes = []
+	internal.auto.downgrade.txn.commit = true
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metadata.max.idle.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	socket.connection.setup.timeout.max.ms = 127000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 60000
+	transactional.id = null
+	value.serializer = class org.springframework.kafka.support.serializer.JsonSerializer
+
+2021-07-25 00:47:45.275  INFO 40620 --- [http-nio-8081-exec-1] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 2.7.1
+2021-07-25 00:47:45.278  INFO 40620 --- [http-nio-8081-exec-1] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 61dbce85d0d41457
+2021-07-25 00:47:45.278  INFO 40620 --- [http-nio-8081-exec-1] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1627166865273
+2021-07-25 00:47:45.649  INFO 40620 --- [kafka-producer-network-thread | producer-1] org.apache.kafka.clients.Metadata        : [Producer clientId=producer-1] Cluster ID: 55BHEX_8R3Sb3ZVwi10irg
+2021-07-25 00:52:19.672  INFO 40620 --- [SpringApplicationShutdownHook] o.a.k.clients.producer.KafkaProducer     : [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 30000 ms.
+2021-07-25 00:52:19.688  INFO 40620 --- [SpringApplicationShutdownHook] org.apache.kafka.common.metrics.Metrics  : Metrics scheduler closed
+2021-07-25 00:52:19.688  INFO 40620 --- [SpringApplicationShutdownHook] org.apache.kafka.common.metrics.Metrics  : Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2021-07-25 00:52:19.688  INFO 40620 --- [SpringApplicationShutdownHook] org.apache.kafka.common.metrics.Metrics  : Metrics reporters closed
+2021-07-25 00:52:19.689  INFO 40620 --- [SpringApplicationShutdownHook] o.a.kafka.common.utils.AppInfoParser     : App info kafka.producer for producer-1 unregistered
+2021-07-25 00:53:36.575  INFO 41048 --- [main] c.s.t.M.MessageProducerApplication       : Starting MessageProducerApplication using Java 11.0.11 on M121710A.fritz.box with PID 41048 (/Users/mheiden/Projects/sendungsverfolgung/MessageProducer/target/classes started by mheiden in /Users/mheiden/Projects/sendungsverfolgung/MessageProducer)
+2021-07-25 00:53:36.579  INFO 41048 --- [main] c.s.t.M.MessageProducerApplication       : No active profile set, falling back to default profiles: default
+2021-07-25 00:53:38.748  INFO 41048 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2021-07-25 00:53:38.767  INFO 41048 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-07-25 00:53:38.768  INFO 41048 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2021-07-25 00:53:38.954  INFO 41048 --- [main] o.a.c.c.C.[.[.[/bringdeinding]           : Initializing Spring embedded WebApplicationContext
+2021-07-25 00:53:38.956  INFO 41048 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2272 ms
+2021-07-25 00:53:39.784  INFO 41048 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoint(s) beneath base path '/actuator'
+2021-07-25 00:53:39.971  INFO 41048 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2021-07-25 00:53:40.159  INFO 41048 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path '/bringdeinding'
+2021-07-25 00:53:40.286  INFO 41048 --- [main] c.s.t.M.MessageProducerApplication       : Started MessageProducerApplication in 4.89 seconds (JVM running for 5.669)
+2021-07-25 00:53:48.781  INFO 41048 --- [http-nio-8081-exec-1] o.a.c.c.C.[.[.[/bringdeinding]           : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-07-25 00:53:48.783  INFO 41048 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-07-25 00:53:48.786  INFO 41048 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2021-07-25 00:53:49.192  INFO 41048 --- [http-nio-8081-exec-1] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values: 
+	acks = 1
+	batch.size = 16384
+	bootstrap.servers = [localhost:29092]
+	buffer.memory = 33554432
+	client.dns.lookup = use_all_dns_ips
+	client.id = producer-1
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = false
+	interceptor.classes = []
+	internal.auto.downgrade.txn.commit = true
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metadata.max.idle.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	socket.connection.setup.timeout.max.ms = 127000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 60000
+	transactional.id = null
+	value.serializer = class org.springframework.kafka.support.serializer.JsonSerializer
+
+2021-07-25 00:53:49.310  INFO 41048 --- [http-nio-8081-exec-1] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 2.7.1
+2021-07-25 00:53:49.315  INFO 41048 --- [http-nio-8081-exec-1] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 61dbce85d0d41457
+2021-07-25 00:53:49.315  INFO 41048 --- [http-nio-8081-exec-1] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1627167229308
+2021-07-25 00:53:49.942  INFO 41048 --- [kafka-producer-network-thread | producer-1] org.apache.kafka.clients.Metadata        : [Producer clientId=producer-1] Cluster ID: 55BHEX_8R3Sb3ZVwi10irg
