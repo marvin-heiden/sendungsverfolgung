@@ -58,9 +58,8 @@ public class InputListener {
             for (JsonNode identifier : identifiers) {
                 String key = identifier.get("Value").asText();
                 int partition = Math.floorMod(key.hashCode(), 10);
-                // Add key to message for querying
-                ((ObjectNode) node).put("Key", key);
                 String jsonMessage = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(node);
+                System.out.println(jsonMessage);
                 kafkaTemplate.send("storage", partition,key,jsonMessage);
                 System.out.println("Published key "+key+" to partition "+partition+" on topic storage");
             }

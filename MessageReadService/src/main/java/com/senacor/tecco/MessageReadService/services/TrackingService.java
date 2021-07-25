@@ -28,7 +28,7 @@ public class TrackingService {
             ));
         }
 
-        Event lastMessageEvent = messages.get(messages.size()-1).getEvent();
+        Event lastMessageEvent = messages.get(messages.size() - 1).getEvent();
 
         TrackingHistory trackingHistory = new TrackingHistory(
                 lastMessageEvent.getReceiver(),
@@ -44,10 +44,11 @@ public class TrackingService {
         // Get initial messages by tracking number
         ArrayList<Message> messages = getMessagesByTrackingNumber(trackingNumber);
 
+        // Return empty if nothing was found
+        if (messages.size() == 0) return new TrackingHistory(new Person(), new Person(),new ArrayList<>(), new TreeSet<>());
+
         TreeSet<String> foundNumbers = new TreeSet<>();
         foundNumbers.add(trackingNumber);
-
-        ObjectMapper mapper = new ObjectMapper();
 
         // Check for associated messages referenced by Identifier
         for (int i = 0; i < messages.size(); i++) {
@@ -65,9 +66,9 @@ public class TrackingService {
 
         return createTrackingHistory(
                 messages.stream()
-                .distinct()
-                .sorted(Comparator.comparing(o -> o.getEvent().getCreationTimestamp()))
-                .collect(Collectors.toList()),
+                        .distinct()
+                        .sorted(Comparator.comparing(o -> o.getEvent().getCreationTimestamp()))
+                        .collect(Collectors.toList()),
                 foundNumbers);
     }
 
@@ -77,7 +78,7 @@ public class TrackingService {
 
         // Create consumer
         Properties consumerProps = KafkaConsumerConfig.getConsumerProps();
-        KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(consumerProps);
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(consumerProps);
 
         // Assign partition
         int partitionNumber = Math.floorMod(trackingNumber.hashCode(), 10);
@@ -85,10 +86,9 @@ public class TrackingService {
         LinkedList<TopicPartition> partitions = new LinkedList<>();
         partitions.add(partition);
         consumer.assign(partitions);
-        System.out.println("Assigned to partition "+partitionNumber);
 
         // Retrieve all current messages on partition
-        long maxOffset = consumer.endOffsets(partitions).get(partition) - 1;
+        long maxOffset = consumer.endOffsets(partitions).get(partition);
         long currentOffset = 0;
         ConsumerRecords<String, String> records;
         ObjectMapper mapper = new ObjectMapper();
@@ -100,7 +100,6 @@ public class TrackingService {
                 if (record.key().equals(trackingNumber)) {
                     try {
                         messages.add(mapper.readValue(record.value(), Message.class));
-                        System.out.println(record.value());
                         // Stop searching if final message was already processed
                         if (record.value().contains("Zugestellt")) break outerLoop;
                     } catch (JsonProcessingException e) {

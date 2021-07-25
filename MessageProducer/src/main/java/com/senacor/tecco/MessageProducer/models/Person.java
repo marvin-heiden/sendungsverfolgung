@@ -1,6 +1,7 @@
 package com.senacor.tecco.MessageProducer.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mifmif.common.regex.Generex;
 import lombok.*;
@@ -16,6 +17,7 @@ import static net.andreinc.mockneat.types.enums.StringType.NUMBERS;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Person {
     @Getter
