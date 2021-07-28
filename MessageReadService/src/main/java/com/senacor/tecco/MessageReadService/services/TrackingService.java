@@ -17,61 +17,6 @@ import java.util.stream.Collectors;
 @Service
 public class TrackingService {
 
-
-    public TrackingHistory createTrackingHistory(List<Message> messages, TreeSet<String> identifiers) {
-        ArrayList<Step> history = new ArrayList<>();
-        for (Message message : messages) {
-            history.add(new Step(
-                    message.getEvent().getCreationTimestamp(),
-                    message.getEvent().getMessage(),
-                    message.getEvent().getType()
-            ));
-        }
-
-        Event lastMessageEvent = messages.get(messages.size() - 1).getEvent();
-
-        TrackingHistory trackingHistory = new TrackingHistory(
-                lastMessageEvent.getReceiver(),
-                lastMessageEvent.getSender(),
-                history,
-                identifiers
-        );
-
-        return trackingHistory;
-    }
-
-    public TrackingHistory getAllAssociatedMessages(String trackingNumber) {
-        // Get initial messages by tracking number
-        ArrayList<Message> messages = getMessagesByTrackingNumber(trackingNumber);
-
-        // Return empty if nothing was found
-        if (messages.size() == 0) return new TrackingHistory(new Person(), new Person(),new ArrayList<>(), new TreeSet<>());
-
-        TreeSet<String> foundNumbers = new TreeSet<>();
-        foundNumbers.add(trackingNumber);
-
-        // Check for associated messages referenced by Identifier
-        for (int i = 0; i < messages.size(); i++) {
-
-            //ArrayNode identifiers = (ArrayNode) node.get("Event").get("Identifiers");
-            for (Identifier identifier : messages.get(i).getEvent().getIdentifiers()) {
-                String value = identifier.getValue();
-
-                // Add new messages if new tracking number was found
-                if (foundNumbers.add(value)) {
-                    messages.addAll(getMessagesByTrackingNumber(value));
-                }
-            }
-        }
-
-        return createTrackingHistory(
-                messages.stream()
-                        .distinct()
-                        .sorted(Comparator.comparing(o -> o.getEvent().getCreationTimestamp()))
-                        .collect(Collectors.toList()),
-                foundNumbers);
-    }
-
     public ArrayList<Message> getMessagesByTrackingNumber(String trackingNumber) {
         // Create Container for return values
         ArrayList<Message> messages = new ArrayList<>();
@@ -81,7 +26,7 @@ public class TrackingService {
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(consumerProps);
 
         // Assign partition
-        int partitionNumber = Math.floorMod(trackingNumber.hashCode(), 10);
+        int partitionNumber = Math.floorMod(trackingNumber.hashCode(), 1);
         TopicPartition partition = new TopicPartition("storage", partitionNumber);
         LinkedList<TopicPartition> partitions = new LinkedList<>();
         partitions.add(partition);
@@ -114,5 +59,57 @@ public class TrackingService {
         consumer.close();
 
         return messages;
+    }
+
+    public TrackingHistory createTrackingHistory(List<Message> messages, HashSet<String> identifiers) {
+        ArrayList<Step> history = new ArrayList<>();
+        for (Message message : messages) {
+            history.add(new Step(
+                    message.getEvent().getCreationTimestamp(),
+                    message.getEvent().getMessage(),
+                    message.getEvent().getType()
+            ));
+        }
+
+        Event lastMessageEvent = messages.get(messages.size() - 1).getEvent();
+
+        return new TrackingHistory(
+                lastMessageEvent.getReceiver(),
+                lastMessageEvent.getSender(),
+                history,
+                identifiers
+        );
+    }
+
+    public TrackingHistory getAllAssociatedMessages(String trackingNumber) {
+        // Get initial messages by tracking number
+        ArrayList<Message> messages = getMessagesByTrackingNumber(trackingNumber);
+
+        // Return empty if nothing was found
+        if (messages.size() == 0) return new TrackingHistory(new Person(), new Person(), new ArrayList<>(), new HashSet<>());
+
+        HashSet<String> foundNumbers = new HashSet<>();
+        foundNumbers.add(trackingNumber);
+
+        // Check for associated messages referenced by Identifier
+        for (int i = 0; i < messages.size(); i++) {
+
+            //ArrayNode identifiers = (ArrayNode) node.get("Event").get("Identifiers");
+            for (Identifier identifier : messages.get(i).getEvent().getIdentifiers()) {
+                String value = identifier.getValue();
+
+                // Add new messages if new tracking number was found
+                if (foundNumbers.add(value)) {
+                    messages.addAll(getMessagesByTrackingNumber(value));
+                }
+            }
+        }
+
+        return createTrackingHistory(
+                messages.stream()
+                        .distinct()
+                        .sorted(Comparator.comparing(o -> o.getEvent().getCreationTimestamp()))
+                        .collect(Collectors.toList()),
+                foundNumbers);
     }
 }

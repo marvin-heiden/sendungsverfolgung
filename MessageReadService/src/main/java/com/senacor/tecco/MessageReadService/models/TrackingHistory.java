@@ -3,7 +3,7 @@ package com.senacor.tecco.MessageReadService.models;
 import lombok.*;
 
 import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.HashSet;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
@@ -20,5 +20,5 @@ public class TrackingHistory {
     private ArrayList<Step> history;
     @Getter
     @Setter
-    private TreeSet<String> identifiers;
+    private HashSet<String> identifiers;
 }

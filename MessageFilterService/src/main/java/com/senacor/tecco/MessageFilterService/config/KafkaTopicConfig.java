@@ -36,7 +36,7 @@ public class KafkaTopicConfig {
     @Bean
     public NewTopic topicStorage() {
         return TopicBuilder.name("storage")
-                .partitions(10)
+                .partitions(1)
                 .replicas(1)
                 .config(TopicConfig.RETENTION_MS_CONFIG, "7776000000") // Retention time of 90 Days
                 .build();

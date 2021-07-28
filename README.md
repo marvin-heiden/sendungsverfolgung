@@ -1,3 +1,3 @@
 # BA-Projekt: Sendungsverfolgungssystem
 
-![Architekturdiagramm](./architecture.jpg)
+![Architekturdiagramm](./architecture.png)

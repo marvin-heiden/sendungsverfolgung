@@ -57,9 +57,9 @@ public class InputListener {
             ArrayNode identifiers = (ArrayNode) node.get("Event").get("Identifiers");
             for (JsonNode identifier : identifiers) {
                 String key = identifier.get("Value").asText();
-                int partition = Math.floorMod(key.hashCode(), 10);
+                int partition = Math.floorMod(key.hashCode(), 1);
                 String jsonMessage = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(node);
-                System.out.println(jsonMessage);
+                //System.out.println(jsonMessage);
                 kafkaTemplate.send("storage", partition,key,jsonMessage);
                 System.out.println("Published key "+key+" to partition "+partition+" on topic storage");
             }
