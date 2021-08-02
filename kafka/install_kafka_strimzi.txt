@@ -1,0 +1,12 @@
+-   Create Kafka Namespace in K8s-Cluster
+    kubectl create namespace kafka
+-   Install Strimzi
+    kubectl create -f 'https://strimzi.io/install/latest?namespace=kafka' -n kafka
+-   Create Kafka Cluster
+    kubectl apply -f kafka_cluster.yaml -n kafka
+-   Generic Producer
+    kubectl -n kafka run kafka-producer -ti --image=quay.io/strimzi/kafka:0.24.0-kafka-2.8.0 --rm=true --restart=Never -- bin/kafka-console-producer.sh --broker-list my-cluster-kafka-bootstrap:9092 --topic my-topic
+-   Generic Consumer
+    kubectl -n kafka run kafka-consumer -ti --image=quay.io/strimzi/kafka:0.24.0-kafka-2.8.0 --rm=true --restart=Never -- bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic my-topic --from-beginning
+-   Create Topic
+    kubectl create -n my-kafka-project -f kafka_topic.yaml

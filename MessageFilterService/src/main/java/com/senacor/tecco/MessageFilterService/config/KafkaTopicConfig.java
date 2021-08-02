@@ -30,15 +30,7 @@ public class KafkaTopicConfig {
         return TopicBuilder.name("input")
                 .partitions(1)
                 .replicas(1)
-                .build();
-    }
-
-    @Bean
-    public NewTopic topicStorage() {
-        return TopicBuilder.name("storage")
-                .partitions(1)
-                .replicas(1)
-                .config(TopicConfig.RETENTION_MS_CONFIG, "7776000000") // Retention time of 90 Days
+                .config(TopicConfig.RETENTION_MS_CONFIG, "604800000")
                 .build();
     }
 
@@ -47,6 +39,7 @@ public class KafkaTopicConfig {
         return TopicBuilder.name("error")
                 .partitions(1)
                 .replicas(1)
+                .config(TopicConfig.RETENTION_MS_CONFIG, "604800000")
                 .build();
     }
 }
