@@ -23,12 +23,15 @@ public class ProducerService {
     public void sendSingleMessage(){
 
         ArrayList<Identifier> identifiers = new ArrayList<>();
+
         Identifier identifier = Identifier.generate();
         identifier.setValue("b100728099692800316b");
         identifiers.add(identifier);
         Identifier identifier2 = Identifier.generate();
-        identifier2.setValue("b9624879830768395478921385078556813b");
+        identifier2.setValue("b286049728112292316b");
         identifiers.add(identifier2);
+
+
         //identifiers.add(Identifier.generate());
         Event event = Event.generate(Event.EventType.Abgangszentrum);
         event.setIdentifiers(identifiers);

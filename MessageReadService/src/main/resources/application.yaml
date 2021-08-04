@@ -1,10 +1,13 @@
 spring:
-  kafka:
-    bootstrap-servers: "localhost:29092"
-    consumer:
-      group-id: "groupId"
-      auto-offset-reset: "earliest"
-      enable-auto-commit: false
+  data:
+    mongodb:
+      authentication-database: admin
+      username: rootuser
+      password: rootpass
+      database: storage
+      port: 27017
+      host: localhost
+      auto-index-creation: true
 
 server:
   servlet:

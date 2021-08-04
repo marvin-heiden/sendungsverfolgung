@@ -7,11 +7,9 @@ import nonapi.io.github.classgraph.json.Id;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Sharded;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.UUID;
+import java.util.*;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
@@ -19,19 +17,16 @@ import java.util.UUID;
 @Document
 @EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Sharded(shardKey = "id")
 public class TrackingHistory {
 
     @Id
     private ObjectId id;
 
-    private Person sender;
-
-    private Person receiver;
-
-    private ArrayList<Step> history;
+    private Set<Event> history;
 
     @Indexed
-    private HashSet<String> identifiers;
+    private Set<String> identifiers;
 
     @Indexed(expireAfterSeconds=7776000) // 90 days
     private Date lastModified;

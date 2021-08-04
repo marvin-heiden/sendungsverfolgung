@@ -9,14 +9,11 @@ import com.networknt.schema.ValidationMessage;
 import com.senacor.tecco.MessageFilterService.db.TrackingRepository;
 import com.senacor.tecco.MessageFilterService.models.Event;
 import com.senacor.tecco.MessageFilterService.models.Message;
-import com.senacor.tecco.MessageFilterService.models.Step;
 import com.senacor.tecco.MessageFilterService.models.TrackingHistory;
 import lombok.extern.log4j.Log4j2;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -27,7 +24,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
-import static org.springframework.data.mongodb.core.aggregation.AggregationUpdate.update;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
@@ -74,28 +70,26 @@ public class InputListener {
             // Send to Storage DB
 
             // create history form event
-            ArrayList<Step> history = new ArrayList<>();
-            history.add(new Step(event.getCreationTimestamp(), event.getMessage(), event.getType()));
+            Set<Event> history = new HashSet<>();
+            history.add(event);
 
             // sort list by timestamp
             //history.sort(Comparator.comparing(Step::getTimestamp));
 
             // create identifier list
-            HashSet<String> identifiers = new HashSet<>();
+            Set<String> identifiers = new HashSet<>();
             event.getIdentifiers().forEach(id -> identifiers.add(id.getValue()));
 
             // Query if TrackingHistory exist - returns List
             List<TrackingHistory> foundTrackingHistoryObjects =
                     mongoTemplate.find(query(where("Identifiers").in(identifiers)), TrackingHistory.class);
-            log.info(foundTrackingHistoryObjects);
+            log.info("Found objects: "+foundTrackingHistoryObjects);
 
             // If no previous Data exists
             if (foundTrackingHistoryObjects.isEmpty()) {
                // Create new
                 repository.insert(new TrackingHistory(
                         ObjectId.get(),
-                        event.getSender(),
-                        event.getReceiver(),
                         history,
                         identifiers,
                         new Date()
@@ -106,10 +100,8 @@ public class InputListener {
             else if(foundTrackingHistoryObjects.size() == 1){
                 // Update with new Step, Sender, Receiver, Identifiers
                 Update update = new Update();
-                update.addToSet("history", new Step(event.getCreationTimestamp(), event.getMessage(), event.getType()));
+                update.addToSet("history", event);
                 update.addToSet("identifiers").each(identifiers);
-                update.set("sender", event.getSender());
-                update.set("receiver", event.getReceiver());
                 update.set("lastModified", new Date());
 
                 mongoTemplate.updateFirst(
@@ -127,10 +119,8 @@ public class InputListener {
                     update.addToSet("history").each(trackingHistory.getHistory());
                     update.addToSet("identifiers").each(trackingHistory.getIdentifiers());
                 });
-                update.addToSet("history", new Step(event.getCreationTimestamp(), event.getMessage(), event.getType()));
+                update.addToSet("history", event);
                 update.addToSet("identifiers").each(identifiers);
-                update.set("sender", event.getSender());
-                update.set("receiver", event.getReceiver());
                 update.set("lastModified", new Date());
 
                 // Commit
