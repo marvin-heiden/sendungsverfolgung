@@ -31,6 +31,5 @@ public class TrackingHistory {
     @Indexed
     private Set<String> identifiers;
 
-    @Indexed(expireAfterSeconds=7776000) // 90 days
-    private Date lastModified;
+    private long ttl;
 }

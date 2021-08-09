@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping(value = "/tracking")
+@RequestMapping(value = "/api/tracking")
 @RequiredArgsConstructor
 @Log4j2
 public class TrackingHistoryController {
@@ -22,12 +22,8 @@ public class TrackingHistoryController {
     @GetMapping("/")
     @ApiOperation(value = "Returns a list of tracking events", notes = "Tracking history connected to a specific tracking number", nickname = "getTrackingHistory")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "List of unordered tracking Events "),
-            @ApiResponse(code = 204, message = "Keine Sendungen zur angegebenen Sendungsnummer gefunden."),
-            @ApiResponse(code = 400, message = "The request is not valid"),
-            @ApiResponse(code = 401, message = "Authentication failed"),
-            @ApiResponse(code = 403, message = "Not enough rights to access this resource"),
-            @ApiResponse(code = 404, message = "Resource not found")
+            @ApiResponse(code = 200, message = "Sendungsverlauf wurde gefunden."),
+            @ApiResponse(code = 404, message = "Keine Sendungen zur angegebenen Sendungsnummer gefunden.")
     })
     TrackingHistoryShort getTrackingHistory(@RequestParam(value = "trackingNumber") String trackingNumber) {
         // Query Storage Topic for trackingNumber

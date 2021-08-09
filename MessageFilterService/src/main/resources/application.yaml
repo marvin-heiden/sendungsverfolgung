@@ -1,14 +1,18 @@
 spring:
   kafka:
-    bootstrap-servers: "localhost:29092"
+    bootstrap-servers: ${KAFKA_HOST}:${KAFKA_PORT}
+    group.id: ${KAFKA_GROUP_ID}
+    client-id: consumer-groupId-1
+    properties:
+      sasl.jaas.config: null #org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="Endpoint=sb://nebrass.servicebus.windows.net/;SharedAccessKeyName=SendReceiveOnly;SharedAccessKey=XXXX";
+      sasl.mechanism: GSSAPI #PLAIN
+      security.protocol: PLAINTEXT #SASL_SSL
+
   data:
     mongodb:
       authentication-database: admin
-      username: rootuser
-      password: rootpass
-      database: storage
-      port: 27017
-      host: localhost
+      database: ${DB_DATABASE}
+      uri: ${DB_URI}
       auto-index-creation: true
 
 server:

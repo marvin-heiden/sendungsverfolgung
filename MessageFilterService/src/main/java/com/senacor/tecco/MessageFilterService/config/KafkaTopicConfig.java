@@ -14,14 +14,14 @@ import java.util.Map;
 
 @Configuration
 public class KafkaTopicConfig {
-
-    @Value(value = "${spring.kafka.bootstrap-servers}")
-    private String bootstrapAddress;
+/*
+    @Value("${spring.kafka.bootstrap-servers}")
+    private String bootstrapServers;
 
     @Bean
     public KafkaAdmin kafkaAdmin() {
         Map<String, Object> config = new HashMap<>();
-        config.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+        config.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         return new KafkaAdmin(config);
     }
 
@@ -42,4 +42,6 @@ public class KafkaTopicConfig {
                 .config(TopicConfig.RETENTION_MS_CONFIG, "604800000")
                 .build();
     }
+
+ */
 }

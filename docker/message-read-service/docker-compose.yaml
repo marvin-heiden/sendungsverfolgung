@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+    message-read-service:
+        image: trackingacr.azurecr.io/message-read-service
+        container_name: message-read-service
+        restart: always
+        ports:
+            - 8083:8083
+        environment:
+            - DB_DATABASE=tracking_db
+            - DB_URI=mongodb://tracking-cosmos-account:BxfOGqsSYdI49u5sxB2G62YWrqQTA2YryFDhwJaUpJx7nif3x5omT0Pm2qeSU5uHsB83oWoFZ8bz2rrLwxH2Tg==@tracking-cosmos-account.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&replicaSet=globaldb&maxIdleTimeMS=120000&appName=@tracking-cosmos-account@

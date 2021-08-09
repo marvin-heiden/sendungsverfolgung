@@ -14,15 +14,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ApiNoContentException.class)
     public ResponseEntity<?> handleApiNoContentException(ApiNoContentException e){
 
-        HttpStatus noContent = HttpStatus.NO_CONTENT;
+        HttpStatus notFound = HttpStatus.NOT_FOUND;
 
         ApiException apiException = new ApiException(
                 e.getMessage(),
-                e,
-                noContent,
+                notFound,
                 new Date()
         );
 
-        return ResponseEntity.status(noContent).body(apiException);
+        return ResponseEntity.status(notFound).body(apiException);
     }
 }

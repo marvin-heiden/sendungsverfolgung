@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/producer")
+@RequestMapping(value = "/api/producer")
 @RequiredArgsConstructor
 public class ProducerController {
 
     private final ProducerService producerService;
 
-    @PostMapping
+    @PostMapping("/")
     @ApiOperation(value = "Creates a new random event message", notes = "Produce a valid event message and send it to the input topic", nickname = "sendSingleMessage")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Event message has been created. "),
@@ -30,7 +30,7 @@ public class ProducerController {
         producerService.sendSingleMessage();
     }
 
-    @GetMapping
+    @GetMapping("/")
     @ApiOperation(value = "Creates a number of new random event message", notes = "Produce valid event messages and send them to the input topic", nickname = "sendMultipleMessages")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Event messages have been created. "),

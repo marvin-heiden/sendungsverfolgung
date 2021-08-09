@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+    message-filter-service:
+        image: trackingacr.azurecr.io/message-filter-service
+        container_name: message-filter-service
+        restart: always
+        ports:
+            - 8083:8083
+        environment:
+            - KAFKA_HOST=192.168.80.5
+            - KAFKA_PORT=29092
+            - KAFKA_GROUP_ID=groupId
+            - DB_PASSWORD=rootpass
+            - DB_USERNAME=rootuser
+            - DB_HOST=192.168.80.3
+            - DB_PORT=27017
+networks:
+    default:
+        #external: true
+        name: mongodb_network
