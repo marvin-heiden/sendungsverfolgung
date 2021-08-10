@@ -66,26 +66,27 @@ public class InputListener {
         if (errors.isEmpty()) {
 
             Event event = mapper.readValue(message, Message.class).getEvent();
-            // Send to Storage DB
 
             // create history form event
             Set<Event> history = new HashSet<>();
             history.add(event);
 
-            // sort list by timestamp
-            //history.sort(Comparator.comparing(Step::getTimestamp));
-
             // create identifier list
             Set<String> identifiers = new HashSet<>();
             event.getIdentifiers().forEach(id -> identifiers.add(id.getValue()));
 
-            // Query if TrackingHistory exist - returns List
-            List<TrackingHistory> foundTrackingHistoryObjects =
-                    mongoTemplate.find(query(where("Identifiers").in(identifiers)), TrackingHistory.class);
-            log.info("Found objects: " + foundTrackingHistoryObjects);
+            // Query if TrackingHistory exist - returns List with distinct trackingHistoryId values
+            List<ObjectId> lookupList = mongoTemplate.query(IdentifierLookup.class)
+                    .distinct("trackingHistoryId")
+                    .matching(query(where("_id").in(identifiers)))
+                    .as(ObjectId.class)
+                    .all();
+
+
+            log.info("Found objects: " + lookupList);
 
             // If no previous Data exists
-            if (foundTrackingHistoryObjects.isEmpty()) {
+            if (lookupList.isEmpty()) {
                 // Create new
                 TrackingHistory trackingHistory = new TrackingHistory(history, identifiers);
                 mongoTemplate.insert(trackingHistory);
@@ -96,21 +97,36 @@ public class InputListener {
                 });
 
             }
-            // If one entry exists
-            else if (foundTrackingHistoryObjects.size() == 1) {
+            // If entries exists
+            else {
+                // Get TrackingHistoryObjects
+                List<TrackingHistory> foundTrackingHistoryObjects = new ArrayList<>();
+                lookupList.forEach(trackingHistoryId -> {
+                    foundTrackingHistoryObjects.add(
+                            mongoTemplate.findById(trackingHistoryId, TrackingHistory.class)
+                    );
+                });
+
                 // Update with new Step, Sender, Receiver, Identifiers
                 Update update = new Update();
                 foundTrackingHistoryObjects.forEach(trackingHistory -> {
+                    history.addAll(trackingHistory.getHistory());
                     identifiers.addAll(trackingHistory.getIdentifiers());
                 });
-                update.addToSet("history", event);
+                update.addToSet("history").each(history);
                 update.addToSet("identifiers").each(identifiers);
 
                 TrackingHistory result = mongoTemplate.findAndModify(
-                        query(where("_id").is(foundTrackingHistoryObjects.get(0).getId().toString())),
+                        query(where("_id").is(foundTrackingHistoryObjects.get(0).getId().toString())), // first entry
                         update,
                         TrackingHistory.class
                 );
+
+                // Delete excess documents if more than one document was found
+                if (foundTrackingHistoryObjects.size() > 1)
+                    for (int i = 1; i < foundTrackingHistoryObjects.size(); i++) {
+                        mongoTemplate.remove(foundTrackingHistoryObjects.get(i));
+                    }
 
                 // Update or insert lookup documents
                 identifiers.forEach(identifier -> {
@@ -118,38 +134,6 @@ public class InputListener {
                 });
 
             }
-            // If more then one entry exists
-            else {
-                // Aggregate first entry with other Data's Steps, Update, Delete others
-                Update update = new Update();
-
-                foundTrackingHistoryObjects.forEach(trackingHistory -> {
-                    update.addToSet("history").each(trackingHistory.getHistory()); // add to collection instead
-                    identifiers.addAll(trackingHistory.getIdentifiers());
-                });
-                update.addToSet("history", event); // add collection here
-                update.addToSet("identifiers").each(identifiers);
-
-                // Commit
-                TrackingHistory result = mongoTemplate.findAndModify(
-                        query(where("_id").is(foundTrackingHistoryObjects.get(0).getId().toString())),
-                        update,
-                        TrackingHistory.class
-                );
-
-                // Delete
-                for (int i = 1; i < foundTrackingHistoryObjects.size(); i++) {
-                    mongoTemplate.remove(foundTrackingHistoryObjects.get(i));
-                }
-
-                // Update lookup documents
-                Update lookupUpdate = new Update();
-                lookupUpdate.set("trackingHistoryId", Objects.requireNonNull(result).getId());
-                identifiers.forEach(identifier -> {
-                    mongoTemplate.save(new IdentifierLookup(Objects.requireNonNull(result).getId(), identifier));
-                });
-            }
-
         }
         // If errors exist
         else {

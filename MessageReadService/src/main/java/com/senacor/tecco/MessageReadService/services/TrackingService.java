@@ -20,11 +20,14 @@ public class TrackingService {
     MongoTemplate mongoTemplate;
 
     public TrackingHistoryShort getShortTrackingHistoryByTrackingNumber(String trackingNumber) {
+        // Check existing IdentifierLookup documents
+        IdentifierLookup lookup = mongoTemplate.findOne(query(where("_id").is(trackingNumber)), IdentifierLookup.class);
+
+        log.info(lookup);
+        if(lookup == null) return null;
+
         // Get History Object from DB
-        TrackingHistory trackingHistory = mongoTemplate.findOne(query(where("Identifiers").is(trackingNumber)), TrackingHistory.class);
-
-        if(trackingHistory == null) return null;
-
+        TrackingHistory trackingHistory = mongoTemplate.findOne(query(where("_id").is(lookup.getTrackingHistoryId())), TrackingHistory.class);
 
         // Sort history by date
         List<Event> history = trackingHistory.getHistory()

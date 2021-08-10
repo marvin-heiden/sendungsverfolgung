@@ -28,7 +28,7 @@ public class TrackingHistoryController {
     TrackingHistoryShort getTrackingHistory(@RequestParam(value = "trackingNumber") String trackingNumber) {
         // Query Storage Topic for trackingNumber
         TrackingHistoryShort history = trackingService.getShortTrackingHistoryByTrackingNumber(trackingNumber);
-        log.info(history);
+
         if (history == null)
             throw new ApiNoContentException("Keine Sendungen zur angegebenen Sendungsnummer gefunden.");
         else return history;
