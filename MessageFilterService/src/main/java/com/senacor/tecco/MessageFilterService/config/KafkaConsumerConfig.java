@@ -23,6 +23,15 @@ public class KafkaConsumerConfig {
     @Value("${spring.kafka.group.id}")
     private String groupId;
 
+    @Value("${spring.kafka.security.protocol}")
+    private String securityProtocol;
+
+    @Value("${spring.kafka.properties.sasl.jaas.config}")
+    private String saslJaasConfig;
+
+    @Value("${spring.kafka.properties.sasl.mechanism}")
+    private String saslMechanism;
+
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
         Map<String, Object> config = new HashMap<>();
@@ -38,6 +47,15 @@ public class KafkaConsumerConfig {
         config.put(
                 ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
                 StringDeserializer.class);
+        config.put(
+                "security.protocol",
+                securityProtocol);
+        config.put(
+                "sasl.jaas.config",
+                saslJaasConfig);
+        config.put(
+                "sasl.mechanism",
+                saslMechanism);
 
         return new DefaultKafkaConsumerFactory<>(config);
     }
