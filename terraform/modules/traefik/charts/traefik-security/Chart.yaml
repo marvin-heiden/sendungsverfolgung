@@ -1,0 +1,8 @@
+
+
+apiVersion: v2
+name: traefik-cert-auth
+description: A Helm chart for traefik-cert-auth
+type: application
+version: 0.1.0
+appVersion: 0.1.0

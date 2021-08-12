@@ -1,0 +1,42 @@
+
+
+%{ if annotations != null }
+
+service:
+  # Additional annotations (e.g. for cloud provider specific config)
+  annotations: {
+    "service.beta.kubernetes.io/azure-load-balancer-internal": ${annotations.azure-load-balancer-internal},
+    "service.beta.kubernetes.io/azure-load-balancer-internal-subnet": ${annotations.azure-load-balancer-internal-subnet},
+    "service.beta.kubernetes.io/azure-load-balancer-mode": ${annotations.azure-load-balancer-mode}
+  }
+
+%{endif ~}
+
+
+%{ for entrypoint in custom_entrypoints ~}
+%{if index(custom_entrypoints, entrypoint) == 0 ~}
+ports:
+%{endif ~}
+  ${entrypoint.name}:
+    port: ${entrypoint.port}
+    expose: true
+    exposedPort: ${entrypoint.port}
+    protocol: ${entrypoint.protocol}
+%{ endfor ~}
+
+globalArguments:
+  - "--global.checknewversion=false"
+  - "--global.sendanonymoususage=false"
+
+additionalArguments:
+ - "--serverstransport.insecureskipverify=true"
+ - "--accesslog=true"
+ - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+%{if traefik_config != null ~}
+ - "--providers.file.filename=/config/${traefik_config.configmap_key}"
+volumes:
+ - name: ${traefik_config.configmap_name}
+   namespace: ${traefik_config.configmap_namespace}
+   mountPath: "/config"
+   type: configMap
+%{endif ~}

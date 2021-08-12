@@ -1,0 +1,17 @@
+
+
+replicaCount: 1
+
+image:
+  # the repository from where the image can be pulled
+  repository: "trackingacr.azurecr.io"
+  name: message-filter-service
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+
+service:
+  type: ClusterIP
+  port: 8082
+  targetPort: 8082
+  contextPath: /bringdeinding

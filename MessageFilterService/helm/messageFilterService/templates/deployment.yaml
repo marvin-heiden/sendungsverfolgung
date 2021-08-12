@@ -1,0 +1,95 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+    version: {{ .Values.image.tag | default .Chart.AppVersion }}
+
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      annotations:
+        rollingUpdate: {{ now | unixEpoch | quote }}
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Release.Name }}
+          image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: "{{ .Values.service.contextPath }}/actuator/health/liveness"
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: 70
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: "{{ .Values.service.contextPath }}/actuator/health/readiness"
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: 70
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+            - name: secret-volume
+              mountPath: /secret
+          env:
+            # Secrets:
+            - name: DB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mfs-secret
+                  key: db-uri
+            - name: KAFKA_SASL_JAAS_CONFIG
+              valueFrom:
+                secretKeyRef:
+                  name: mfs-secret
+                  key: kafka-sasl-jaas-config
+            # Configs:
+            - name: DB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: mfs-config
+                  key: db-database
+            - name: KAFKA_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mfs-config
+                  key: kafka-host
+            - name: KAFKA_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: mfs-config
+                  key: kafka-port
+            - name: KAFKA_GROUP_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: mfs-config
+                  key: kafka-group-id
+            - name: KAFKA_SASL_MECHANISM
+              valueFrom:
+                configMapKeyRef:
+                  name: mfs-config
+                  key: kafka-sasl-mechanism
+            - name: KAFKA_SECURITY_PROTOCOL
+              valueFrom:
+                configMapKeyRef:
+                  name: mfs-config
+                  key: kafka-security-protocol
+      volumes:
+        - name: config-volume
+          configMap:
+            name: mfs-config
+        - name: secret-volume
+          secret:
+            secretName: mfs-secret

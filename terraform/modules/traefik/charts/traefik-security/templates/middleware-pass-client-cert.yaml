@@ -1,0 +1,30 @@
+
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ .Values.middleware_pass_tls_client_cert }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  passTLSClientCert:
+    pem: false
+    info:
+      notAfter: false
+      notBefore: false
+      sans: false
+      subject:
+        country: false
+        province: false
+        locality: false
+        organization: false
+        commonName: true
+        serialNumber: false
+        domainComponent: false
+      issuer:
+        country: false
+        province: false
+        locality: false
+        organization: false
+        commonName: false
+        serialNumber: false
+        domainComponent: false

@@ -1,0 +1,63 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+    version: {{ .Values.image.tag | default .Chart.AppVersion }}
+
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      annotations:
+        rollingUpdate: {{ now | unixEpoch | quote }}
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Release.Name }}
+          image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: "{{ .Values.service.contextPath }}/actuator/health/liveness"
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: 70
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: "{{ .Values.service.contextPath }}/actuator/health/readiness"
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: 70
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+            - name: secret-volume
+              mountPath: /secret
+          env:
+            - name: DB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mrs-secret
+                  key: db-uri
+            - name: DB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: mrs-config
+                  key: db-database
+      volumes:
+        - name: config-volume
+          configMap:
+            name: mrs-config
+        - name: secret-volume
+          secret:
+            secretName: mrs-secret
