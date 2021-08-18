@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -19,29 +20,21 @@ import java.util.Date;
 public class Event {
 
 
-    @JsonProperty("EventUUID")
     private String uuid;
 
-    @JsonProperty("EventTimestamp")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-    private Date creationTimestamp;
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    private Instant creationTimestamp;
 
-    @JsonProperty("EventType")
     private String type;
 
-    @JsonProperty("ScanFacility")
     private String facility;
 
-    @JsonProperty("Message")
     private String message;
 
-    @JsonProperty("Sender")
     private Person sender;
 
-    @JsonProperty("Receiver")
     private Person receiver;
 
-    @JsonProperty("Identifiers")
     private ArrayList<Identifier> identifiers;
 
 }

@@ -6,6 +6,7 @@ target/
 log
 .env
 secrets/
+helm/messageFilterService/templates/mfs-secret.yaml
 
 ### STS ###
 .apt_generated

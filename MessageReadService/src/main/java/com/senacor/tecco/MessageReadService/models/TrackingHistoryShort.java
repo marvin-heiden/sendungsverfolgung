@@ -17,7 +17,10 @@ import java.util.Set;
 public class TrackingHistoryShort {
 
     private Person sender;
+
     private Person receiver;
+
     private List<Step> history;
+
     private Set<String> identifiers;
 }

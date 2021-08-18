@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -20,8 +21,8 @@ public class Event {
     private String uuid;
 
     @JsonProperty("EventTimestamp")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-    private Date creationTimestamp;
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    private Instant creationTimestamp;
 
     @JsonProperty("EventType")
     private String type;

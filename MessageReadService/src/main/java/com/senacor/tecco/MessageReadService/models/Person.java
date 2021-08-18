@@ -16,36 +16,25 @@ import lombok.RequiredArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Person {
 
-    @JsonProperty("Name")
     private String name;
 
-    @JsonProperty("Street")
     private String street;
 
-    @JsonProperty("HouseNumber")
     private String houseNumber;
 
-    @JsonProperty("City")
     private String city;
 
-    @JsonProperty("PostCode")
     private String postCode;
 
-    @JsonProperty("CityDistrict")
     private String cityDistrict;
 
-    @JsonProperty("PostBox")
     private String postBox;
 
-    @JsonProperty("Country")
     private String country;
 
-    @JsonProperty("Email")
     private String email;
 
-    @JsonProperty("Phone")
     private String phone;
 
-    @JsonProperty("Fax")
     private String fax;
 }

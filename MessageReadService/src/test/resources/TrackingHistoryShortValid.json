@@ -1,0 +1,57 @@
+{
+    "sender": {
+        "name": "Chong Antolos",
+        "street": "Redans-Allee",
+        "houseNumber": "014",
+        "city": "London",
+        "postCode": "393130491",
+        "cityDistrict": "Halifax",
+        "postBox": "808757513",
+        "country": "DE",
+        "email": "lyrictruesdell@comcast.net",
+        "phone": "+26-8682-4476314",
+        "fax": "+17-9088-4866611"
+    },
+    "receiver": {
+        "name": "Leana Arseneau",
+        "street": "Downgrade-Allee",
+        "houseNumber": "137",
+        "city": "Copenhagen",
+        "postCode": "1",
+        "cityDistrict": "Ridge",
+        "postBox": "0165",
+        "country": "DE",
+        "email": "sphenicgorge@verizon.net",
+        "phone": "+13-1141-2268438",
+        "fax": "+77-8799-1749391"
+    },
+    "history": [
+        {
+            "timestamp": "2021-08-12T11:10:46.193+00:00",
+            "message": "Die Sendung wurde angemeldet und befindet sich bald auf dem Versandweg.",
+            "status": "Vorankündigung",
+            "facility": "Sarajevo"
+        },
+        {
+            "timestamp": "2021-08-12T15:10:46.193+00:00",
+            "message": "Die Sendung wurde im Abgangszentrum bearbeitet und befindet sich auf dem Weg zum Zielgebiet.",
+            "status": "Abgangszentrum",
+            "facility": "Kiev"
+        },
+        {
+            "timestamp": "2021-08-12T23:10:46.193+00:00",
+            "message": "Die Sendung wurde im Eingangszentrum bearbeitet und wird in Kürze zugestellt.",
+            "status": "Eingangszentrum",
+            "facility": "Tallinn"
+        },
+        {
+            "timestamp": "2021-08-13T11:10:46.193+00:00",
+            "message": "Die Sendung wurde erfolgreich zugestellt.",
+            "status": "Zugestellt",
+            "facility": "Sarajevo"
+        }
+    ],
+    "identifiers": [
+        "b157414801094b"
+    ]
+}

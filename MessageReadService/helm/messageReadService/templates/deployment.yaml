@@ -38,6 +38,11 @@ spec:
               path: "{{ .Values.service.contextPath }}/actuator/health/readiness"
               port: {{ .Values.service.targetPort }}
             initialDelaySeconds: 70
+          resources: # Define for autoscaling
+            requests:
+              cpu: {{ .Values.service.autoscale.minCpu }}
+            limits:
+              cpu: {{ .Values.service.autoscale.maxCpu }}
           volumeMounts:
             - name: config-volume
               mountPath: /config

@@ -10,7 +10,9 @@ spring:
         mechanism: ${KAFKA_SASL_MECHANISM}
     security:
       protocol: ${KAFKA_SECURITY_PROTOCOL}
-
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
 
 server:
   servlet:

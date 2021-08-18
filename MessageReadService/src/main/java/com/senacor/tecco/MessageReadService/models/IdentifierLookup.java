@@ -1,5 +1,6 @@
 package com.senacor.tecco.MessageReadService.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,6 +20,7 @@ public class IdentifierLookup {
 
 
     @Id
+    @JsonProperty("_id")
     private String identifier;
 
     private ObjectId trackingHistoryId;

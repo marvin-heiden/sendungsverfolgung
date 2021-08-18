@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.Instant;
 import java.util.Date;
 
 @RequiredArgsConstructor
@@ -14,7 +15,7 @@ import java.util.Date;
 @Document
 @EqualsAndHashCode
 public class Step {
-    private Date timestamp;
+    private Instant timestamp;
     private String message;
     private String status;
     private String facility;

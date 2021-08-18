@@ -42,12 +42,6 @@ public class KafkaConsumerConfig {
                 ConsumerConfig.GROUP_ID_CONFIG,
                 groupId);
         config.put(
-                ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
-                StringDeserializer.class);
-        config.put(
-                ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
-                StringDeserializer.class);
-        config.put(
                 "security.protocol",
                 securityProtocol);
         config.put(
@@ -57,7 +51,11 @@ public class KafkaConsumerConfig {
                 "sasl.mechanism",
                 saslMechanism);
 
-        return new DefaultKafkaConsumerFactory<>(config);
+        return new DefaultKafkaConsumerFactory<>(
+                config,
+                new StringDeserializer(),
+                new StringDeserializer()
+        );
     }
 
     @Bean

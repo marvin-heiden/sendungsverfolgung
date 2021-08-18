@@ -1,0 +1,174 @@
+{
+    "_id" : "611501b6ad219550b85ec2a3",
+    "history" : [
+        {
+            "uuid" : "3d3b02cf-83b4-468a-8485-f1ec84148e82",
+            "creationTimestamp" : "2021-08-12T11:10:46.193+00:00",
+            "type" : "Vorankündigung",
+            "facility" : "Sarajevo",
+            "message" : "Die Sendung wurde angemeldet und befindet sich bald auf dem Versandweg.",
+            "sender" : {
+                "name" : "Chong Antolos",
+                "street" : "Redans-Allee",
+                "houseNumber" : "014",
+                "city" : "London",
+                "postCode" : "393130491",
+                "cityDistrict" : "Halifax",
+                "postBox" : "808757513",
+                "country" : "DE",
+                "email" : "lyrictruesdell@comcast.net",
+                "phone" : "+26-8682-4476314",
+                "fax" : "+17-9088-4866611"
+            },
+            "receiver" : {
+                "name" : "Leana Arseneau",
+                "street" : "Downgrade-Allee",
+                "houseNumber" : "137",
+                "city" : "Copenhagen",
+                "postCode" : "1",
+                "cityDistrict" : "Ridge",
+                "postBox" : "0165",
+                "country" : "DE",
+                "email" : "sphenicgorge@verizon.net",
+                "phone" : "+13-1141-2268438",
+                "fax" : "+77-8799-1749391"
+            },
+            "identifiers" : [
+                {
+                    "type" : "Versandmarke",
+                    "value" : "b157414801094b",
+                    "amount" : 0.4000000059604645,
+                    "currency" : "EUR"
+                }
+            ]
+        },
+        {
+            "uuid" : "0a4582ca-a50f-47c5-9dd2-181bbc93c9d7",
+            "creationTimestamp" :  "2021-08-12T15:10:46.193+00:00",
+            "type" : "Abgangszentrum",
+            "facility" : "Kiev",
+            "message" : "Die Sendung wurde im Abgangszentrum bearbeitet und befindet sich auf dem Weg zum Zielgebiet.",
+            "sender" : {
+                "name" : "Chong Antolos",
+                "street" : "Redans-Allee",
+                "houseNumber" : "014",
+                "city" : "London",
+                "postCode" : "393130491",
+                "cityDistrict" : "Halifax",
+                "postBox" : "808757513",
+                "country" : "DE",
+                "email" : "lyrictruesdell@comcast.net",
+                "phone" : "+26-8682-4476314",
+                "fax" : "+17-9088-4866611"
+            },
+            "receiver" : {
+                "name" : "Leana Arseneau",
+                "street" : "Downgrade-Allee",
+                "houseNumber" : "137",
+                "city" : "Copenhagen",
+                "postCode" : "1",
+                "cityDistrict" : "Ridge",
+                "postBox" : "0165",
+                "country" : "DE",
+                "email" : "sphenicgorge@verizon.net",
+                "phone" : "+13-1141-2268438",
+                "fax" : "+77-8799-1749391"
+            },
+            "identifiers" : [
+                {
+                    "type" : "Versandmarke",
+                    "value" : "b157414801094b",
+                    "amount" : 0.4000000059604645,
+                    "currency" : "EUR"
+                }
+            ]
+        },
+        {
+            "uuid" : "895b7aae-2a65-4f8d-8820-5849764892e9",
+            "creationTimestamp" : "2021-08-12T23:10:46.193+00:00",
+            "type" : "Eingangszentrum",
+            "facility" : "Tallinn",
+            "message" : "Die Sendung wurde im Eingangszentrum bearbeitet und wird in Kürze zugestellt.",
+            "sender" : {
+                "name" : "Chong Antolos",
+                "street" : "Redans-Allee",
+                "houseNumber" : "014",
+                "city" : "London",
+                "postCode" : "393130491",
+                "cityDistrict" : "Halifax",
+                "postBox" : "808757513",
+                "country" : "DE",
+                "email" : "lyrictruesdell@comcast.net",
+                "phone" : "+26-8682-4476314",
+                "fax" : "+17-9088-4866611"
+            },
+            "receiver" : {
+                "name" : "Leana Arseneau",
+                "street" : "Downgrade-Allee",
+                "houseNumber" : "137",
+                "city" : "Copenhagen",
+                "postCode" : "1",
+                "cityDistrict" : "Ridge",
+                "postBox" : "0165",
+                "country" : "DE",
+                "email" : "sphenicgorge@verizon.net",
+                "phone" : "+13-1141-2268438",
+                "fax" : "+77-8799-1749391"
+            },
+            "identifiers" : [
+                {
+                    "type" : "Versandmarke",
+                    "value" : "b157414801094b",
+                    "amount" : 0.4000000059604645,
+                    "currency" : "EUR"
+                }
+            ]
+        },
+        {
+            "uuid" : "93677131-6399-4849-b779-591085cdb11f",
+            "creationTimestamp" : "2021-08-13T11:10:46.193+00:00",
+            "type" : "Zugestellt",
+            "facility" : "Sarajevo",
+            "message" : "Die Sendung wurde erfolgreich zugestellt.",
+            "sender" : {
+                "name" : "Chong Antolos",
+                "street" : "Redans-Allee",
+                "houseNumber" : "014",
+                "city" : "London",
+                "postCode" : "393130491",
+                "cityDistrict" : "Halifax",
+                "postBox" : "808757513",
+                "country" : "DE",
+                "email" : "lyrictruesdell@comcast.net",
+                "phone" : "+26-8682-4476314",
+                "fax" : "+17-9088-4866611"
+            },
+            "receiver" : {
+                "name" : "Leana Arseneau",
+                "street" : "Downgrade-Allee",
+                "houseNumber" : "137",
+                "city" : "Copenhagen",
+                "postCode" : "1",
+                "cityDistrict" : "Ridge",
+                "postBox" : "0165",
+                "country" : "DE",
+                "email" : "sphenicgorge@verizon.net",
+                "phone" : "+13-1141-2268438",
+                "fax" : "+77-8799-1749391"
+            },
+            "identifiers" : [
+                {
+                    "type" : "Versandmarke",
+                    "value" : "b157414801094b",
+                    "amount" : 0.4000000059604645,
+                    "currency" : "EUR"
+                }
+            ]
+        }
+    ],
+    "identifiers" : [
+        "b157414801094b"
+    ],
+    "ttl" : 7776000,
+    "_class" : "com.senacor.tecco.MessageFilterService.models.TrackingHistory"
+}

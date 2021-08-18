@@ -1,6 +1,7 @@
 package com.senacor.tecco.MessageReadService.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,6 +25,7 @@ import java.util.Set;
 public class TrackingHistory {
 
     @Id
+    @JsonProperty("_id")
     private ObjectId id;
 
     private Set<Event> history;

@@ -29,6 +29,10 @@ public class TrackingService {
         // Get History Object from DB
         TrackingHistory trackingHistory = mongoTemplate.findOne(query(where("_id").is(lookup.getTrackingHistoryId())), TrackingHistory.class);
 
+        return createTrackingHistoryShort(trackingHistory);
+    }
+
+    public TrackingHistoryShort createTrackingHistoryShort(TrackingHistory trackingHistory){
         // Sort history by date
         List<Event> history = trackingHistory.getHistory()
                 .stream()
@@ -38,21 +42,20 @@ public class TrackingService {
         // Create steps for short Tracking History
         ArrayList<Step> steps = new ArrayList<>();
         history.forEach(event -> {
-                    steps.add(new Step(
-                            event.getCreationTimestamp(),
-                            event.getMessage(),
-                            event.getType(),
-                            event.getFacility()
-                    ));
-                });
+            steps.add(new Step(
+                    event.getCreationTimestamp(),
+                    event.getMessage(),
+                    event.getType(),
+                    event.getFacility()
+            ));
+        });
 
         return new TrackingHistoryShort(
                 history.get(history.size()-1).getSender(), // most recent sender
                 history.get(history.size()-1).getReceiver(), // most recent receiver
                 steps,
                 trackingHistory.getIdentifiers()
-                );
+        );
     }
-
 
 }

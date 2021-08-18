@@ -14,9 +14,7 @@ import lombok.RequiredArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Message {
 
-    @JsonProperty("MessageHeader")
     private MessageHeader messageHeader;
 
-    @JsonProperty("Event")
     private Event event;
 }

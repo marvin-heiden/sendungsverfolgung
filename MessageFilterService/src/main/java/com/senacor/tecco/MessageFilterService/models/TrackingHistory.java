@@ -15,13 +15,13 @@ import java.util.*;
 @AllArgsConstructor
 @Data
 @Document
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {"id"})
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Sharded(shardKey = "id")
 public class TrackingHistory {
 
     @Id
-    private ObjectId id;
+    private String id;
 
     private Set<Event> history;
 
@@ -32,7 +32,7 @@ public class TrackingHistory {
     private long ttl;
 
     public TrackingHistory(Set<Event> history, Set<String> identifiers) {
-        this.id = ObjectId.get();
+        this.id = ObjectId.get().toString();
         this.history = history;
         this.identifiers = identifiers;
         this.ttl = 7776000; // 90 days = 7776000

@@ -1,0 +1,9 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  data:
+    mongodb:
+      authentication-database: admin
+      database: ${DB_DATABASE}
+      #uri: mongodb://localhost:40505/storage
+      auto-index-creation: true

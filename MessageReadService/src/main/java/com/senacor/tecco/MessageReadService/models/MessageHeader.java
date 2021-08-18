@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 
+import java.time.Instant;
 import java.util.Date;
 
 @RequiredArgsConstructor
@@ -17,16 +18,12 @@ import java.util.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MessageHeader {
 
-    @JsonProperty("MsgUUID")
     private String msgUuid;
 
-    @JsonProperty("MsgSender")
     private String msgSender;
 
-    @JsonProperty("MsgReceiver")
     private String msgReceiver;
 
-    @JsonProperty("MsgTimestamp")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-    private Date msgTimestamp;
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    private Instant msgTimestamp;
 }

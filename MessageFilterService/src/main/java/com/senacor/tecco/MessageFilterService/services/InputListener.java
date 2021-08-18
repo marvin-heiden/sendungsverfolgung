@@ -7,7 +7,6 @@ import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.SpecVersion;
 import com.networknt.schema.ValidationMessage;
-import com.senacor.tecco.MessageFilterService.db.TrackingRepository;
 import com.senacor.tecco.MessageFilterService.models.Event;
 import com.senacor.tecco.MessageFilterService.models.IdentifierLookup;
 import com.senacor.tecco.MessageFilterService.models.Message;
@@ -15,12 +14,14 @@ import com.senacor.tecco.MessageFilterService.models.TrackingHistory;
 import lombok.extern.log4j.Log4j2;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -42,28 +43,17 @@ public class InputListener {
     @Autowired
     MongoTemplate mongoTemplate;
 
-    JsonSchema jsonSchemaTrackingEvent;
-
     @Autowired
-    public InputListener() {
-        JsonSchemaFactory factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
-
-        try {
-            jsonSchemaTrackingEvent = factory.getSchema(new URI("classpath:TrackingEventSchema.json"));
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-    }
+    SchemaValidator schemaValidator;
 
     @KafkaListener(topics = "input", groupId = "groupId")
     public void listen(String message) throws IOException {
 
         // Validate message against JSON schema
-        JsonNode node = mapper.readTree(message);
-        Set<ValidationMessage> errors = jsonSchemaTrackingEvent.validate(node);
+        Set<ValidationMessage> errors = schemaValidator.validate(message);
 
         //Send to dedicated destinations
-        if (errors.isEmpty()) {
+        if (errors != null && errors.isEmpty()) {
 
             Event event = mapper.readValue(message, Message.class).getEvent();
 
@@ -76,10 +66,10 @@ public class InputListener {
             event.getIdentifiers().forEach(id -> identifiers.add(id.getValue()));
 
             // Query if TrackingHistory exist - returns List with distinct trackingHistoryId values
-            List<ObjectId> lookupList = mongoTemplate.query(IdentifierLookup.class)
+            List<String> lookupList = mongoTemplate.query(IdentifierLookup.class)
                     .distinct("trackingHistoryId")
                     .matching(query(where("_id").in(identifiers)))
-                    .as(ObjectId.class)
+                    .as(String.class)
                     .all();
 
 
@@ -117,7 +107,7 @@ public class InputListener {
                 update.addToSet("identifiers").each(identifiers);
 
                 TrackingHistory result = mongoTemplate.findAndModify(
-                        query(where("_id").is(foundTrackingHistoryObjects.get(0).getId().toString())), // first entry
+                        query(where("_id").is(foundTrackingHistoryObjects.get(0).getId())), // first entry
                         update,
                         TrackingHistory.class
                 );

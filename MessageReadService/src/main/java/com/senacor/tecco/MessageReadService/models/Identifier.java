@@ -14,15 +14,11 @@ import lombok.RequiredArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Identifier {
 
-    @JsonProperty("Type")
     private String type;
 
-    @JsonProperty("Value")
     private String value;
 
-    @JsonProperty("Amount")
     private float amount;
 
-    @JsonProperty("Currency")
     private String currency;
 }

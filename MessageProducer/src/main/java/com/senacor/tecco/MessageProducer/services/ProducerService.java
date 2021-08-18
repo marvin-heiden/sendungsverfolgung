@@ -41,6 +41,8 @@ public class ProducerService {
         message.setMessageHeader(MessageHeader.generate());
         message.setEvent(event);
 
+        System.out.println(message);
+
         //Message message = Message.generate();
         kafkaTemplate.send("input", message.getEvent().getIdentifiers().get(0).getValue(),message);
         System.out.println("Message sent:");
@@ -57,12 +59,12 @@ public class ProducerService {
             for (int i = 0; i < 4; i++) {
                 event.setUuid(UUID.randomUUID().toString());
                 event.setFacility(mock.cities().capitalsEurope().get());
-                event.setCreationTimestamp(new Date(event.getCreationTimestamp().getTime() + i * 3600000 * 4));
+                event.setCreationTimestamp(event.getCreationTimestamp().plusMillis( i * 3600000 * 4));
                 event.setType(eventTypes[i].toString());
                 event.setMessage(Event.getMessageString(eventTypes[i]));
 
                 header.setMsgUuid(UUID.randomUUID().toString());
-                header.setMsgTimestamp(new Date(header.getMsgTimestamp().getTime() + i * 3600000 * 4));
+                header.setMsgTimestamp(header.getMsgTimestamp().plusMillis( i * 3600000 * 4));
 
                 Message message = new Message(header, event);
                 kafkaTemplate.send("input", event.getIdentifiers().get(0).getValue(), message);

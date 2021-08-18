@@ -1,0 +1,6 @@
+{
+    "_id" : "b157414801094b",
+    "trackingHistoryId" : "611501b6ad219550b85ec2a3",
+    "ttl" : 7776000,
+    "_class" : "com.senacor.tecco.MessageFilterService.models.IdentifierLookup"
+}

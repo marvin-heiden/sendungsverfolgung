@@ -22,11 +22,11 @@ public class IdentifierLookup {
     @Id
     private String identifier;
 
-    private ObjectId trackingHistoryId;
+    private String trackingHistoryId;
 
     private long ttl;
 
-    public IdentifierLookup(ObjectId trackingHistoryId, String identifier){
+    public IdentifierLookup(String trackingHistoryId, String identifier){
         this.trackingHistoryId = trackingHistoryId;
         this.identifier = identifier;
         this.ttl = 7776000; // 90 days = 7776000

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import net.andreinc.mockneat.MockNeat;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
@@ -23,8 +24,8 @@ public class Event {
     @Getter
     @Setter
     @JsonProperty("EventTimestamp")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-    private Date creationTimestamp;
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    private Instant creationTimestamp;
     @Getter
     @Setter
     @JsonProperty("EventType")
@@ -93,7 +94,7 @@ public class Event {
 
         return new Event(
                 UUID.randomUUID().toString(),
-                new Date(),
+                Instant.now(),
                 eventType.toString(),
                 mock.cities().capitalsEurope().get(),
                 message,

@@ -15,3 +15,9 @@ service:
   port: 8083
   targetPort: 8083
   contextPath: /bringdeinding
+  autoscale:
+    minCpu: 250m        # define min cpu unit count
+    maxCpu: 500m        # define max cpu unit count
+    cpuUtilization: 50  # target CPU utilization
+    maxReplicas: 10     # define max replica count
+    minReplicas: 3      # define min replica count
