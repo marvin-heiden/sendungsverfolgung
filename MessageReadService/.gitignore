@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 log/
 secrets/
+helm/messageReadService/templates/mrs-secret.yaml
 
 ### STS ###
 .apt_generated

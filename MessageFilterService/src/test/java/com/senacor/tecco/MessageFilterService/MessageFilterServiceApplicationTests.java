@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.listener.MessageListenerContainer;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.context.EmbeddedKafka;
@@ -26,7 +27,6 @@ import org.springframework.test.context.ActiveProfiles;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,8 +38,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("test")
 @EmbeddedKafka(
         partitions = 2,
-        topics = {"input", "error"},
-        brokerProperties = {"listeners=PLAINTEXT://localhost:29092", "port=29092"}
+        topics = {"input", "error"}
 )
 class MessageFilterServiceApplicationTests {
 
@@ -60,6 +59,9 @@ class MessageFilterServiceApplicationTests {
 
     @Autowired
     InputListener inputListener;
+
+    @Autowired
+    KafkaTemplate<String, Message> kafkaTemplate;
 
     @Value("classpath:TrackingMessageValid.json")
     File trackingMessageValid;
@@ -106,5 +108,29 @@ class MessageFilterServiceApplicationTests {
         assertThat(result).hasSize(1);
         assertThat(result.get(0)).isEqualTo(comparisonTrackingHistory);
     }
+
+/*
+    @Test
+    public void kafkaListenerTest() throws IOException {
+        String message = Files.readString(trackingMessageValid.toPath());
+
+        Message messageObject = mapper.readValue(message, Message.class);
+
+        kafkaTemplate.send("input", messageObject);
+
+        Event event = mapper.readValue(message, Message.class).getEvent();
+
+        // create history form event
+        Set<Event> history = new HashSet<>();
+        history.add(event);
+        Set<String> identifiers = new HashSet<>();
+        event.getIdentifiers().forEach(id -> identifiers.add(id.getValue()));
+        TrackingHistory comparisonTrackingHistory = new TrackingHistory(history,identifiers);
+
+        List<TrackingHistory> result = mongoTemplate.findAll(TrackingHistory.class);
+        assertThat(result).hasSize(1);
+        assertThat(result.get(0)).isEqualTo(comparisonTrackingHistory);
+    }
+*/
 
 }

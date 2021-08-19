@@ -49,12 +49,12 @@ spec:
             - name: secret-volume
               mountPath: /secret
           env:
-            - name: DB_URI
+            - name: SPRING_DATA_MONGODB_URI
               valueFrom:
                 secretKeyRef:
                   name: mrs-secret
                   key: db-uri
-            - name: DB_DATABASE
+            - name: SPRING_DATA_MONGODB_DATABASE
               valueFrom:
                 configMapKeyRef:
                   name: mrs-config

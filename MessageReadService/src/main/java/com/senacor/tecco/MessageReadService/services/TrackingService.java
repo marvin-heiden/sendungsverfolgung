@@ -21,7 +21,7 @@ public class TrackingService {
 
     public TrackingHistoryShort getShortTrackingHistoryByTrackingNumber(String trackingNumber) {
         // Check existing IdentifierLookup documents
-        IdentifierLookup lookup = mongoTemplate.findOne(query(where("_id").is(trackingNumber)), IdentifierLookup.class);
+        IdentifierLookup lookup = mongoTemplate.findOne(query(where("_id").is(trackingNumber.strip())), IdentifierLookup.class);
 
         log.info(lookup);
         if(lookup == null) return null;

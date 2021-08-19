@@ -1,15 +1,6 @@
 spring:
   kafka:
-    bootstrap-servers: ${KAFKA_HOST}:${KAFKA_PORT}
-    group.id: ${KAFKA_GROUP_ID}
     client-id: producer-groupId-1
-    properties:
-      sasl:
-        jaas:
-          config: ${KAFKA_SASL_JAAS_CONFIG}
-        mechanism: ${KAFKA_SASL_MECHANISM}
-    security:
-      protocol: ${KAFKA_SECURITY_PROTOCOL}
   jackson:
     serialization:
       write-dates-as-timestamps: false

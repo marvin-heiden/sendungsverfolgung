@@ -4,8 +4,7 @@ metadata:
   name: mfs-config
 data:
   db-database: storage
-  kafka-host: trackingeventns.servicebus.windows.net
-  kafka-port: "9093"
+  kafka-bootstrap-servers: trackingeventns.servicebus.windows.net:9093
   kafka-group-id: groupId
   kafka-sasl-mechanism: PLAIN
   kafka-security-protocol: SASL_SSL

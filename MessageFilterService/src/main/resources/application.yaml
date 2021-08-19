@@ -1,21 +1,9 @@
 spring:
   kafka:
-    bootstrap-servers: ${KAFKA_HOST}:${KAFKA_PORT}
-    group.id: ${KAFKA_GROUP_ID}
     client-id: consumer-groupId-1
-    properties:
-      sasl:
-        jaas:
-          config: ${KAFKA_SASL_JAAS_CONFIG}
-        mechanism: ${KAFKA_SASL_MECHANISM}
-    security:
-      protocol: ${KAFKA_SECURITY_PROTOCOL}
-
   data:
     mongodb:
       authentication-database: admin
-      database: ${DB_DATABASE}
-      uri: ${DB_URI}
       auto-index-creation: true
 
 server:

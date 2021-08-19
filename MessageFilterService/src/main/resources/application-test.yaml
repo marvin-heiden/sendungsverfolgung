@@ -1,9 +1,19 @@
 spring:
   main:
     allow-bean-definition-overriding: true
+  kafka:
+    bootstrap-servers: ${spring.embedded.kafka.brokers}
+    group.id: groupid
+    properties:
+      sasl:
+        jaas:
+          config: null
+        mechanism: GSSAPI
+    security:
+      protocol: PLAINTEXT
   data:
     mongodb:
+      database: storage
+      uri: mongodb://localhost/
       authentication-database: admin
-      database: ${DB_DATABASE}
-      #uri: mongodb://localhost:40505/storage
       auto-index-creation: true

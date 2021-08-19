@@ -50,43 +50,38 @@ spec:
               mountPath: /secret
           env:
             # Secrets:
-            - name: DB_URI
+            - name: SPRING_DATA_MONGODB_URI
               valueFrom:
                 secretKeyRef:
                   name: mfs-secret
                   key: db-uri
-            - name: KAFKA_SASL_JAAS_CONFIG
+            - name: SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG
               valueFrom:
                 secretKeyRef:
                   name: mfs-secret
                   key: kafka-sasl-jaas-config
             # Configs:
-            - name: DB_DATABASE
+            - name: SPRING_DATA_MONGODB_DATABASE
               valueFrom:
                 configMapKeyRef:
                   name: mfs-config
                   key: db-database
-            - name: KAFKA_HOST
+            - name: SPRING_KAFKA_BOOTSTRAP-SERVERS
               valueFrom:
                 configMapKeyRef:
                   name: mfs-config
-                  key: kafka-host
-            - name: KAFKA_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: mfs-config
-                  key: kafka-port
-            - name: KAFKA_GROUP_ID
+                  key: kafka-bootstrap-servers
+            - name: SPRING_KAFKA_GROUP_ID
               valueFrom:
                 configMapKeyRef:
                   name: mfs-config
                   key: kafka-group-id
-            - name: KAFKA_SASL_MECHANISM
+            - name: SPRING_KAFKA_PROPERTIES_SASL_MECHANISM
               valueFrom:
                 configMapKeyRef:
                   name: mfs-config
                   key: kafka-sasl-mechanism
-            - name: KAFKA_SECURITY_PROTOCOL
+            - name: SPRING_KAFKA_SECURITY_PROTOCOL
               valueFrom:
                 configMapKeyRef:
                   name: mfs-config

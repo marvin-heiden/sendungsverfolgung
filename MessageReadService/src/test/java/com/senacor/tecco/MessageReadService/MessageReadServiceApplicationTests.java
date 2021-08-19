@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -19,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Log4j2
+@ActiveProfiles("test")
 class MessageReadServiceApplicationTests {
 
 	@Autowired
