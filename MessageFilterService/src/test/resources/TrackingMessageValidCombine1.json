@@ -1,0 +1,47 @@
+{
+    "MessageHeader" : {
+        "MsgUUID" : "45cd77c1-5f05-436d-aa4f-98c84b787d94",
+        "MsgSender" : "MessageProducer",
+        "MsgReceiver" : "TrackingService",
+        "MsgTimestamp" : "2021-08-12T11:10:50.852+0000"
+    },
+    "Event" : {
+        "EventUUID" : "f03d7e4e-5d92-4cac-a375-f328881b2cd6",
+        "EventTimestamp" : "2021-08-12T11:10:50.845+0000",
+        "EventType" : "Abgangszentrum",
+        "ScanFacility" : "Athens",
+        "Message" : "Die Sendung wurde im Abgangszentrum bearbeitet und befindet sich auf dem Weg zum Zielgebiet.",
+        "Sender" : {
+            "Name" : "Chong Antolos",
+            "Street" : "Redans-Allee",
+            "HouseNumber" : "014",
+            "City" : "London",
+            "PostCode" : "393130491",
+            "CityDistrict" : "Halifax",
+            "PostBox" : "808757513",
+            "Country" : "DE",
+            "Email" : "lyrictruesdell@comcast.net",
+            "Phone" : "+51-5927-5203342",
+            "Fax" : "+54-7058-8283628"
+        },
+        "Receiver" : {
+            "Name" : "Leana Arseneau",
+            "Street" : "Downgrade-Allee",
+            "HouseNumber" : "137",
+            "City" : "Copenhagen",
+            "PostCode" : "1",
+            "CityDistrict" : "Ridge",
+            "PostBox" : "0165",
+            "Country" : "DE",
+            "Email" : "sphenicgorge@verizon.net",
+            "Phone" : "+17-9658-2739342",
+            "Fax" : "+31-4104-9690037"
+        },
+        "Identifiers" : [ {
+            "Type" : "Versandmarke",
+            "Value" : "b100728099692800316b",
+            "Amount" : 1.11,
+            "Currency" : "EUR"
+        } ]
+    }
+}

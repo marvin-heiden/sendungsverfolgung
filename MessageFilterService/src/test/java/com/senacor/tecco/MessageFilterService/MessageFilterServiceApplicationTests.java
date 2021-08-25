@@ -66,6 +66,12 @@ class MessageFilterServiceApplicationTests {
     @Value("classpath:TrackingMessageValid.json")
     File trackingMessageValid;
 
+    @Value("classpath:TrackingMessageValidCombine1.json")
+    File trackingMessageValidCombine1;
+
+    @Value("classpath:TrackingMessageValidCombine2.json")
+    File trackingMessageValidCombine2;
+
     @BeforeEach
     void waitForAssignment() {
         for (MessageListenerContainer messageListenerContainer : kafkaListenerEndpointRegistry.getListenerContainers()) {
@@ -106,6 +112,39 @@ class MessageFilterServiceApplicationTests {
 
         List<TrackingHistory> result = mongoTemplate.findAll(TrackingHistory.class);
         assertThat(result).hasSize(1);
+
+        assertThat(result.get(0)).isEqualTo(comparisonTrackingHistory);
+    }
+
+    @Test
+    public void combineTrackingHistoriesTest() throws IOException {
+        String combineMessage1 = Files.readString(trackingMessageValidCombine1.toPath());
+        inputListener.listen(combineMessage1);
+        Event event1 = mapper.readValue(trackingMessageValidCombine1, Message.class).getEvent();
+
+        String combineMessage2 = Files.readString(trackingMessageValidCombine2.toPath());
+        inputListener.listen(combineMessage2);
+        Event event2 = mapper.readValue(trackingMessageValidCombine2, Message.class).getEvent();
+
+        String message = Files.readString(trackingMessageValid.toPath());
+        inputListener.listen(message);
+        Event event = mapper.readValue(message, Message.class).getEvent();
+
+        // create history form event
+        Set<Event> history = new HashSet<>();
+        history.add(event1);
+        history.add(event2);
+        history.add(event);
+
+        Set<String> identifiers = new HashSet<>();
+        event1.getIdentifiers().forEach(id -> identifiers.add(id.getValue()));
+        event2.getIdentifiers().forEach(id -> identifiers.add(id.getValue()));
+        event.getIdentifiers().forEach(id -> identifiers.add(id.getValue()));
+        TrackingHistory comparisonTrackingHistory = new TrackingHistory(history,identifiers);
+
+        List<TrackingHistory> result = mongoTemplate.findAll(TrackingHistory.class);
+        assertThat(result).hasSize(1);
+
         assertThat(result.get(0)).isEqualTo(comparisonTrackingHistory);
     }
 

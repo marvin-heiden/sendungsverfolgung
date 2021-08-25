@@ -3,7 +3,7 @@
 
 
 # Check all needed parameters were provided
-if [[ $# -ne 6 ]]
+if [[ $# -ne 4 ]]
 then
   echo "Usage: source ./01_set_environment_variables.sh <PARAMS>"
   echo "  <PARAMS> must be in the following order:"

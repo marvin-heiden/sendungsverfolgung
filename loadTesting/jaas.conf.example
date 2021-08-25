@@ -1,0 +1,5 @@
+KafkaClient {
+    org.apache.kafka.common.security.plain.PlainLoginModule required 
+    username=AZURE_EVENTHUBS_CONNECTION_STRING HERE
+    password=AZURE_EVENTHUBS_CONNECTION_STRING HERE
+};

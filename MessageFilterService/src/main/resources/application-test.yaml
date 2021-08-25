@@ -17,3 +17,7 @@ spring:
       uri: mongodb://localhost/
       authentication-database: admin
       auto-index-creation: true
+  security:
+    user:
+      name: user
+      password: password

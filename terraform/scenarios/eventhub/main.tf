@@ -29,7 +29,7 @@ resource "azurerm_eventhub" "input" {
   namespace_name      = azurerm_eventhub_namespace.event_ns.name
   resource_group_name = local.resource_group_name
   partition_count     = 10
-  message_retention   = 7
+  message_retention   = 1 # day(s)
 }
 
 resource "azurerm_eventhub" "error" {
@@ -37,5 +37,5 @@ resource "azurerm_eventhub" "error" {
   namespace_name      = azurerm_eventhub_namespace.event_ns.name
   resource_group_name = local.resource_group_name
   partition_count     = 10
-  message_retention   = 7
+  message_retention   = 1 # day(s)
 }

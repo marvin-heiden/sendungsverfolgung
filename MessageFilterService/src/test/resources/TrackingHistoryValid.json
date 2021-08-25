@@ -170,5 +170,7 @@
         "b157414801094b"
     ],
     "ttl" : 7776000,
+    "lastModifiedDate": "2021-08-25T08:15:40.106Z",
+    "createdDate": null,
     "_class" : "com.senacor.tecco.MessageFilterService.models.TrackingHistory"
 }

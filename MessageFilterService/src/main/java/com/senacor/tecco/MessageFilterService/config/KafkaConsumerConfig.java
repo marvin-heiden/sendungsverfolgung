@@ -42,6 +42,9 @@ public class KafkaConsumerConfig {
                 ConsumerConfig.GROUP_ID_CONFIG,
                 groupId);
         config.put(
+                ConsumerConfig.AUTO_OFFSET_RESET_CONFIG,
+                "earliest");
+        config.put(
                 "security.protocol",
                 securityProtocol);
         config.put(

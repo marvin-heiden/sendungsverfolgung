@@ -1,30 +1,20 @@
 package com.senacor.tecco.MessageFilterService.services;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.client.result.UpdateResult;
-import com.networknt.schema.JsonSchema;
-import com.networknt.schema.JsonSchemaFactory;
-import com.networknt.schema.SpecVersion;
 import com.networknt.schema.ValidationMessage;
 import com.senacor.tecco.MessageFilterService.models.Event;
 import com.senacor.tecco.MessageFilterService.models.IdentifierLookup;
 import com.senacor.tecco.MessageFilterService.models.Message;
 import com.senacor.tecco.MessageFilterService.models.TrackingHistory;
 import lombok.extern.log4j.Log4j2;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.*;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -46,7 +36,11 @@ public class InputListener {
     @Autowired
     SchemaValidator schemaValidator;
 
-    @KafkaListener(topics = "input", groupId = "groupId")
+    @KafkaListener(
+            topics = "input",
+            groupId = "groupId",
+            concurrency = "1"
+    )
     public void listen(String message) throws IOException {
 
         // Validate message against JSON schema
