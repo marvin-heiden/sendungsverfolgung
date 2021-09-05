@@ -1,15 +1,31 @@
 spring:
   kafka:
     client-id: consumer-groupId-1
+    bootstrap-servers: localhost:29092
+    group.id: groupid
+    properties:
+      sasl:
+        jaas:
+          config: null
+        mechanism: GSSAPI
+    security:
+      protocol: PLAINTEXT
   data:
     mongodb:
       authentication-database: admin
       auto-index-creation: true
+      database: storage
+      uri: mongodb://rootuser:rootpass@localhost:27017/admin
+  security:
+    user:
+      name: user
+      password: password
 
 schema:
   path: ${SCHEMA_PATH}
 
 server:
+  port: 8080
   servlet:
     context-path: /mfs
 

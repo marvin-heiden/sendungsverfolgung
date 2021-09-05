@@ -3,6 +3,12 @@ spring:
     mongodb:
       authentication-database: admin
       auto-index-creation: true
+      database: storage
+      uri: mongodb://rootuser:rootpass@localhost:27017/admin
+  security:
+    user:
+      name: user
+      password: password
 
 server:
   port: 8080

@@ -4,3 +4,4 @@ metadata:
   name: mrs-config
 data:
   SPRING_DATA_MONGODB_DATABASE: storage
+  SERVER_PORT: "8080"
