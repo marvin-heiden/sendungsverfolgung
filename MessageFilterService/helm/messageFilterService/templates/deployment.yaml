@@ -31,65 +31,70 @@ spec:
               scheme: HTTP
               path: "{{ .Values.service.contextPath }}/actuator/health/liveness"
               port: {{ .Values.service.targetPort }}
-            initialDelaySeconds: 70
+            initialDelaySeconds: 20
           readinessProbe:
             httpGet:
               scheme: HTTP
               path: "{{ .Values.service.contextPath }}/actuator/health/readiness"
               port: {{ .Values.service.targetPort }}
-            initialDelaySeconds: 70
+            initialDelaySeconds: 20
           resources: # Define for autoscaling
             requests:
               cpu: {{ .Values.service.autoscale.minCpu }}
             limits:
               cpu: {{ .Values.service.autoscale.maxCpu }}
           volumeMounts:
-            - name: config-volume
-              mountPath: /config
-            - name: secret-volume
-              mountPath: /secret
-          env:
-            # Secrets:
-            - name: SPRING_DATA_MONGODB_URI
-              valueFrom:
-                secretKeyRef:
-                  name: mfs-secret
-                  key: db-uri
-            - name: SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG
-              valueFrom:
-                secretKeyRef:
-                  name: mfs-secret
-                  key: kafka-sasl-jaas-config
-            # Configs:
-            - name: SPRING_DATA_MONGODB_DATABASE
-              valueFrom:
-                configMapKeyRef:
-                  name: mfs-config
-                  key: db-database
-            - name: SPRING_KAFKA_BOOTSTRAP-SERVERS
-              valueFrom:
-                configMapKeyRef:
-                  name: mfs-config
-                  key: kafka-bootstrap-servers
-            - name: SPRING_KAFKA_GROUP_ID
-              valueFrom:
-                configMapKeyRef:
-                  name: mfs-config
-                  key: kafka-group-id
-            - name: SPRING_KAFKA_PROPERTIES_SASL_MECHANISM
-              valueFrom:
-                configMapKeyRef:
-                  name: mfs-config
-                  key: kafka-sasl-mechanism
-            - name: SPRING_KAFKA_SECURITY_PROTOCOL
-              valueFrom:
-                configMapKeyRef:
-                  name: mfs-config
-                  key: kafka-security-protocol
+            - name: schema-volume
+              mountPath: /schema
+#            - name: secret-volume
+#              mountPath: /secret
+          envFrom:
+            - secretRef:
+                name: mfs-secret
+            - configMapRef:
+                name: mfs-config
+#          env:
+#            # Secrets:
+#            - name: SPRING_DATA_MONGODB_URI
+#              valueFrom:
+#                secretKeyRef:
+#                  name: mfs-secret
+#                  key: db-uri
+#            - name: SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG
+#              valueFrom:
+#                secretKeyRef:
+#                  name: mfs-secret
+#                  key: kafka-sasl-jaas-config
+#            # Configs:
+#            - name: SPRING_DATA_MONGODB_DATABASE
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: mfs-config
+#                  key: db-database
+#            - name: SPRING_KAFKA_BOOTSTRAP-SERVERS
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: mfs-config
+#                  key: kafka-bootstrap-servers
+#            - name: SPRING_KAFKA_GROUP_ID
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: mfs-config
+#                  key: kafka-group-id
+#            - name: SPRING_KAFKA_PROPERTIES_SASL_MECHANISM
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: mfs-config
+#                  key: kafka-sasl-mechanism
+#            - name: SPRING_KAFKA_SECURITY_PROTOCOL
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: mfs-config
+#                  key: kafka-security-protocol
       volumes:
-        - name: config-volume
+        - name: schema-volume
           configMap:
-            name: mfs-config
-        - name: secret-volume
-          secret:
-            secretName: mfs-secret
+            name: json-schema
+#        - name: secret-volume
+#          secret:
+#            secretName: mfs-secret

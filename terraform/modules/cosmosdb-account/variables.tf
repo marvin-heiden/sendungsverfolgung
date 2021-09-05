@@ -9,6 +9,9 @@ variable "env" {
 variable "location" {
   type = string
 }
+variable "location_secondary" {
+  type = string
+}
 variable "kind" {
   type = string
 }

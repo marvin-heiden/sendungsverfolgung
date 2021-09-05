@@ -4,18 +4,18 @@ image:
   # the repository from where the image can be pulled
   repository: "trackingacr.azurecr.io"
   name: message-filter-service
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
 service:
   type: ClusterIP
-  port: 8082
-  targetPort: 8082
-  contextPath: /bringdeinding
+  port: 80
+  targetPort: 8080
+  contextPath: /mfs
   autoscale:
     minCpu: 250m        # define min cpu unit count
     maxCpu: 500m        # define max cpu unit count
     cpuUtilization: 50  # target CPU utilization
     maxReplicas: 10     # define max replica count
-    minReplicas: 3      # define min replica count
+    minReplicas: 1      # define min replica count

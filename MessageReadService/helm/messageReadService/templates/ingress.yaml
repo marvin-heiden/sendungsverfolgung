@@ -5,7 +5,8 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   entryPoints:
-    - mrs
+    - websecure
+    - web
   routes:
     - kind: Rule
       match: PathPrefix(`{{ .Values.service.contextPath }}`)

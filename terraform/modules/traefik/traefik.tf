@@ -47,3 +47,19 @@ resource "helm_release" "traefik-security" {
     value = local.middleware_pass_tls_client_cert
   }
 }
+
+# resource "helm_release" "traefik" {
+#   name = "traefik"
+#   repository = "https://helm.traefik.io/traefik"
+#   chart = "traefik"
+#   namespace = var.namespace
+#   version = "10.3.2"
+
+#   values = [
+#     templatefile("${path.module}/values.template", {
+#       custom_entrypoints = var.custom_entrypoints,
+#       traefik_config = var.traefik_config,
+#       annotations = var.annotations
+#     })
+#   ]
+# }

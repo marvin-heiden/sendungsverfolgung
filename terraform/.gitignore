@@ -2,6 +2,7 @@ tf-modules.zip
 tf-modules
 senacor-cluster
 set_env_command
+scenarios/aks_cluster/kube_config.yaml
 
 # Local .terraform directories
 .terraform/

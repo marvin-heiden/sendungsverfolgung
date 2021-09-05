@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: mrs-config
 data:
-  db-database: storage
+  SPRING_DATA_MONGODB_DATABASE: storage

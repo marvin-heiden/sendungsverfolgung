@@ -9,11 +9,12 @@ import com.networknt.schema.SpecVersion;
 import com.networknt.schema.ValidationMessage;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import javax.annotation.PostConstruct;
+import java.io.*;
 import java.util.Set;
 
 @Service
@@ -23,17 +24,17 @@ public class SchemaValidator {
     @Autowired
     ObjectMapper mapper;
 
+    @Value("${schema.path}")
+    String schemaPath;
+
     JsonSchema jsonSchemaTrackingEvent;
 
-    public SchemaValidator(){
+    @PostConstruct
+    public void init() throws FileNotFoundException {
         JsonSchemaFactory factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
-        File trackingEventSchema = null;
-        try {
-            trackingEventSchema = ResourceUtils.getFile("classpath:TrackingEventSchema.json");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        jsonSchemaTrackingEvent = factory.getSchema(trackingEventSchema.toURI());
+        log.info(schemaPath);
+        InputStream trackingEventSchema = new FileInputStream(schemaPath);//getClass().getResourceAsStream(schemaPath);
+        jsonSchemaTrackingEvent = factory.getSchema(trackingEventSchema);
     }
 
     public Set<ValidationMessage> validate(String message){

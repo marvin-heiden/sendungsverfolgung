@@ -3,8 +3,9 @@ kind: ConfigMap
 metadata:
   name: mfs-config
 data:
-  db-database: storage
-  kafka-bootstrap-servers: trackingeventns.servicebus.windows.net:9093
-  kafka-group-id: groupId
-  kafka-sasl-mechanism: PLAIN
-  kafka-security-protocol: SASL_SSL
+  SPRING_DATA_MONGODB_DATABASE: storage
+  SPRING_KAFKA_BOOTSTRAP-SERVERS: trackingeventns.servicebus.windows.net:9093
+  SPRING_KAFKA_GROUP_ID: group-1
+  SPRING_KAFKA_PROPERTIES_SASL_MECHANISM: PLAIN
+  SPRING_KAFKA_SECURITY_PROTOCOL: SASL_SSL
+  SCHEMA_PATH: /schema/TrackingEventSchema.json

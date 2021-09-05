@@ -6,10 +6,12 @@ spring:
       authentication-database: admin
       auto-index-creation: true
 
+schema:
+  path: ${SCHEMA_PATH}
+
 server:
   servlet:
-    context-path: /bringdeinding
-  port: 8082
+    context-path: /mfs
 
 logging:
   file:

@@ -3,6 +3,9 @@
 variable "location" {
   type = string
 }
+variable "location_secondary" {
+  type = string
+}
 variable "env" {
   type = string
 }

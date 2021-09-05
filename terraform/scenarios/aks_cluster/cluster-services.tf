@@ -7,14 +7,21 @@ module "traefik" {
   source    = "../../modules/traefik"
   namespace = "default"
   sniStrict = false
-  custom_entrypoints = [ {
-    name = "mfs"
-    port = 8082
-    protocol = "https"
-  },
-  {
-    name = "mrs"
-    port = 8083
-    protocol = "https"
-  } ]
+  # client_auth_secret_names = [ "traefik-tls-cert" ]
+  # traefik_config = {
+  #   configmap_key = "traefik.yaml"
+  #   configmap_name = "traefik-conf"
+  #   configmap_namespace = "default"
+  # }
+
+  # custom_entrypoints = [ {
+  #   name = "mfs"
+  #   port = 8082
+  #   protocol = "https"
+  # },
+  # {
+  #   name = "mrs"
+  #   port = 8083
+  #   protocol = "https"
+  # } ]
 }

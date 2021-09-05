@@ -25,12 +25,22 @@ resource "azurerm_kubernetes_cluster" "tracking_aks" {
   }
 
   default_node_pool {
-    name            = "default"
-    node_count      = 2
-    vm_size         = "Standard_B2s"
-    os_disk_size_gb = 64
-    os_disk_type    = "Managed"
-    vnet_subnet_id  = data.azurerm_subnet.tracking_subnet.id
+    name                = "default"
+    node_count          = 3
+    vm_size             = "Standard_B4ms"
+    os_disk_size_gb     = 64
+    os_disk_type        = "Managed"
+    vnet_subnet_id      = data.azurerm_subnet.tracking_subnet.id
+    
+    enable_auto_scaling = true
+    max_count           = 5
+    min_count           = 3
+  }
+
+  lifecycle {
+    ignore_changes = [
+      default_node_pool["node_count"] # for Autoscaling
+    ]
   }
 
   service_principal {

@@ -5,9 +5,9 @@ spring:
       auto-index-creation: true
 
 server:
+  port: 8080
   servlet:
-    context-path: /bringdeinding
-  port: 8083
+    context-path: /mrs
 
 logging:
   file:

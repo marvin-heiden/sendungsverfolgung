@@ -31,38 +31,53 @@ spec:
               scheme: HTTP
               path: "{{ .Values.service.contextPath }}/actuator/health/liveness"
               port: {{ .Values.service.targetPort }}
-            initialDelaySeconds: 70
+            initialDelaySeconds: 20
           readinessProbe:
             httpGet:
               scheme: HTTP
               path: "{{ .Values.service.contextPath }}/actuator/health/readiness"
               port: {{ .Values.service.targetPort }}
-            initialDelaySeconds: 70
+            initialDelaySeconds: 20
           resources: # Define for autoscaling
             requests:
               cpu: {{ .Values.service.autoscale.minCpu }}
             limits:
               cpu: {{ .Values.service.autoscale.maxCpu }}
-          volumeMounts:
-            - name: config-volume
-              mountPath: /config
-            - name: secret-volume
-              mountPath: /secret
-          env:
-            - name: SPRING_DATA_MONGODB_URI
-              valueFrom:
-                secretKeyRef:
-                  name: mrs-secret
-                  key: db-uri
-            - name: SPRING_DATA_MONGODB_DATABASE
-              valueFrom:
-                configMapKeyRef:
-                  name: mrs-config
-                  key: db-database
-      volumes:
-        - name: config-volume
-          configMap:
-            name: mrs-config
-        - name: secret-volume
-          secret:
-            secretName: mrs-secret
+#          volumeMounts:
+#            - name: config-volume
+#              mountPath: /config
+#            - name: secret-volume
+#              mountPath: /secret
+          envFrom:
+            - secretRef:
+                name: mrs-secret
+            - configMapRef:
+                name: mrs-config
+#          env:
+#            - name: SPRING_DATA_MONGODB_URI
+#              valueFrom:
+#                secretKeyRef:
+#                  name: mrs-secret
+#                  key: db-uri
+#            - name: SPRING_SECURITY_USER_NAME
+#              valueFrom:
+#                secretKeyRef:
+#                  name: mrs-secret
+#                  key: username
+#            - name: SPRING_SECURITY_USER_PASSWORD
+#              valueFrom:
+#                secretKeyRef:
+#                  name: mrs-secret
+#                  key: password
+#            - name: SPRING_DATA_MONGODB_DATABASE
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: mrs-config
+#                  key: db-database
+#      volumes:
+#        - name: config-volume
+#          configMap:
+#            name: mrs-config
+#        - name: secret-volume
+#          secret:
+#            secretName: mrs-secret

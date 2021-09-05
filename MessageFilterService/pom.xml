@@ -98,7 +98,7 @@
                     <include>**/application*.yaml</include>
                     <include>**/styles.css</include>
                     <include>**/logo.png</include>
-                    <include>TrackingEventSchema.json</include>
+                    <include>**/TrackingEventSchema.json</include>
                 </includes>
             </resource>
         </resources>

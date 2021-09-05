@@ -21,3 +21,5 @@ spring:
     user:
       name: user
       password: password
+schema:
+  path: /Users/mheiden/Projects/sendungsverfolgung/MessageFilterService/schemas/TrackingEventSchema.json #classpath:TrackingEventSchema.json
