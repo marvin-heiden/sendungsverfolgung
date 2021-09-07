@@ -18,7 +18,7 @@ resource "helm_release" "traefik" {
   ]
 }
 
-resource "helm_release" "traefik-security" {
+ resource "helm_release" "traefik-security" {
   depends_on = [
     helm_release.traefik
   ]

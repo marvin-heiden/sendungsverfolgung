@@ -32,10 +32,12 @@ For deployment in AKS-cluster:
     az aks get-credentials --resource-group tracking_resources --name tracking-aks-cluster-<random_number>
 
 7. Install services into AKS-cluster with Helm:
+    (OPTIONAL) set new user credentials in <mfs / mrs>-secret:
+        htpasswd -nbBC 10 mrs-admin mrs-password
     helm install message-<read / filter>-service helm/message<Read / Filter>Service
 
+8. Generate TLS-secret for HTTPS encryption:
+    OpenSSL genrsa -out ca.key 2048
+    openssl req -x509 -new -nodes -days 365 -key ca.key -out ca.crt -subj "/CN=<domain_name>"
+    kubectl create secret tls traefik-tls-cert --key ca.key --cert ca.crt
 
-htpasswd -nbBC 10 mrs-admin mrs-password
-
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=<hostname>"
-kubectl -n default create secret tls traefik-tls-cert --key=tls.key --cert=tls.crt

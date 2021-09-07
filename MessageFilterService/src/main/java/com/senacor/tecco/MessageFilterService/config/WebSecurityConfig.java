@@ -33,7 +33,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/swagger-ui/**",
                         "/actuator/env",
@@ -43,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().permitAll()
                 .and()
-                .logout()
+                .logout().permitAll()
         ;
     }
 

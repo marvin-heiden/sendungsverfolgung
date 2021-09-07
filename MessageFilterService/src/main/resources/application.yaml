@@ -6,7 +6,7 @@ spring:
     properties:
       sasl:
         jaas:
-          config: null
+          config: null # Overwrite in k8s Secret
         mechanism: GSSAPI
     security:
       protocol: PLAINTEXT
@@ -15,11 +15,11 @@ spring:
       authentication-database: admin
       auto-index-creation: true
       database: storage
-      uri: mongodb://rootuser:rootpass@localhost:27017/admin
+      uri: mongodb://rootuser:rootpass@localhost:27017/admin # Overwrite in k8s Secret
   security:
     user:
-      name: user
-      password: password
+      name: user # Overwrite in k8s Secret
+      password: password # Overwrite in k8s Secret
 
 schema:
   path: ${SCHEMA_PATH}

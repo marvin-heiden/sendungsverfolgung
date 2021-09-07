@@ -31,7 +31,9 @@ globalArguments:
 additionalArguments:
  - "--serverstransport.insecureskipverify=true"
  - "--accesslog=true"
- - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+ - "--entrypoints.web.http.redirections.entrypoint.to=:443" # Workaround for redirect bug
+ - "--entrypoints.web.http.redirections.entrypoint.scheme=https" # Workaround for redirect bug
+# - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
 %{if traefik_config != null ~}
  - "--providers.file.filename=/config/${traefik_config.configmap_key}"
 volumes:
