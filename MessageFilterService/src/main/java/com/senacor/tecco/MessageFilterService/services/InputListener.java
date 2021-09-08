@@ -1,6 +1,7 @@
 package com.senacor.tecco.MessageFilterService.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.networknt.schema.ValidationMessage;
 import com.senacor.tecco.MessageFilterService.models.Event;
 import com.senacor.tecco.MessageFilterService.models.IdentifierLookup;
@@ -39,15 +40,16 @@ public class InputListener {
     @KafkaListener(
             topics = "input",
             groupId = "groupId",
-            concurrency = "1"
+            concurrency = "3"
     )
     public void listen(String message) throws IOException {
+        try {
+            // Validate message against JSON schema
+            Set<ValidationMessage> errors = schemaValidator.validate(message);
 
-        // Validate message against JSON schema
-        Set<ValidationMessage> errors = schemaValidator.validate(message);
-
-        //Send to dedicated destinations
-        if (errors != null && errors.isEmpty()) {
+            if (errors == null || !errors.isEmpty()) {
+                throw new Exception("Invalid JSON Message");
+            }
 
             Event event = mapper.readValue(message, Message.class).getEvent();
 
@@ -120,8 +122,8 @@ public class InputListener {
             }
         }
         // If errors exist
-        else {
-            errors.forEach(log::error);
+        catch (Exception e) {
+            // errors.forEach(log::error);
             // Send to Error Topic
             kafkaTemplate.send("error", message);
             log.info("Published message to error topic");

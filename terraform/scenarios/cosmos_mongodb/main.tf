@@ -32,9 +32,9 @@ module "cosmosb-mongodb-collection-trackinghistory" {
   db_name             = module.cosmosdb-mongodb.db_name
   resource_group_name = local.resource_group_name
 
-  throughput          = 10000
+  throughput          = 5000
   default_ttl_seconds = "7776000"
-  enable_autoscaling  = false
+  enable_autoscaling  = true
   shard_key           = "_id"
 }
 
@@ -46,8 +46,8 @@ module "cosmosb-mongodb-collection-identifierlookup" {
   db_name             = module.cosmosdb-mongodb.db_name
   resource_group_name = local.resource_group_name
 
-  throughput          = 10000
+  throughput          = 5000
   default_ttl_seconds = "7776000"
-  enable_autoscaling  = false
+  enable_autoscaling  = true
   shard_key           = "_id"
 }

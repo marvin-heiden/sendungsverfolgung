@@ -42,8 +42,8 @@ public class SchemaValidator {
         JsonNode node = null;
         try {
             node = mapper.readTree(message);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            log.error(e.getMessage());
             return null;
         }
         return jsonSchemaTrackingEvent.validate(node);
