@@ -40,7 +40,7 @@ public class InputListener {
     @KafkaListener(
             topics = "input",
             groupId = "groupId",
-            concurrency = "3"
+            concurrency = "4"
     )
     public void listen(String message) throws IOException {
         try {

@@ -24,11 +24,6 @@ resource "azurerm_cosmosdb_account" "db-account" {
     failover_priority = 0
   }
 
-  geo_location {
-    location = var.location_secondary
-    failover_priority = 1
-  }
-
   // This will set the MongoDB Version to 3.6
   capabilities {
     name = "EnableMongo"

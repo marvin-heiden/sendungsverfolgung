@@ -5,7 +5,6 @@ module "db-account" {
   env                 = var.env
   kind                = "MongoDB"
   location            = var.location
-  location_secondary  = var.location_secondary
   name                = var.account_name
   resource_group_name = var.resource_group_name
   subnet_id           = var.subnet_id

@@ -1,0 +1,7 @@
+Using default tag: latest
+The push refers to repository [trackingacr.azurecr.io/message-filter]
+3f31ab8cb6f0: Preparing
+001205c6ac0e: Preparing
+87d89aa5c881: Preparing
+e2eb06d8af82: Preparing
+e2eb06d8af82: Mounted from message-filter-service
